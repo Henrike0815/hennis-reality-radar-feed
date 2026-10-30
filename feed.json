@@ -1,4 +1,4 @@
-{
+        {
   "updatedAt": "2026-10-30",
   "shows": [
     {
@@ -66,13 +66,28 @@
           "availableOn": "2026-10-07"
         },
         {
+          "id": "ayto-ril-s6-e18",
+          "number": 18,
+          "availableOn": "2026-10-07"
+        },
+        {
           "id": "ayto-ril-s6-e19-20",
           "number": 19,
           "availableOn": "2026-10-14"
         },
         {
+          "id": "ayto-ril-s6-e20",
+          "number": 20,
+          "availableOn": "2026-10-14"
+        },
+        {
           "id": "ayto-ril-s6-e21-22",
           "number": 21,
+          "availableOn": "2026-10-21"
+        },
+        {
+          "id": "ayto-ril-s6-e22",
+          "number": 22,
           "availableOn": "2026-10-21"
         }
       ]
@@ -88,8 +103,18 @@
           "availableOn": "2026-10-07"
         },
         {
+          "id": "loveisland-vip-s3-e8",
+          "number": 8,
+          "availableOn": "2026-10-07"
+        },
+        {
           "id": "loveisland-vip-s3-e9-10",
           "number": 9,
+          "availableOn": "2026-10-14"
+        },
+        {
+          "id": "loveisland-vip-s3-e10",
+          "number": 10,
           "availableOn": "2026-10-14"
         },
         {
@@ -98,8 +123,18 @@
           "availableOn": "2026-10-21"
         },
         {
+          "id": "loveisland-vip-s3-e12",
+          "number": 12,
+          "availableOn": "2026-10-21"
+        },
+        {
           "id": "loveisland-vip-s3-e13-14",
           "number": 13,
+          "availableOn": "2026-10-26"
+        },
+        {
+          "id": "loveisland-vip-s3-e14",
+          "number": 14,
           "availableOn": "2026-10-26"
         }
       ]
@@ -115,8 +150,18 @@
           "availableOn": "2026-10-09"
         },
         {
+          "id": "couplechallenge-halloween-e2",
+          "number": 2,
+          "availableOn": "2026-10-09"
+        },
+        {
           "id": "couplechallenge-halloween-e3-4",
           "number": 3,
+          "availableOn": "2026-10-16"
+        },
+        {
+          "id": "couplechallenge-halloween-e4",
+          "number": 4,
           "availableOn": "2026-10-16"
         },
         {
@@ -125,8 +170,18 @@
           "availableOn": "2026-10-23"
         },
         {
+          "id": "couplechallenge-halloween-e6",
+          "number": 6,
+          "availableOn": "2026-10-23"
+        },
+        {
           "id": "couplechallenge-halloween-e7-8",
           "number": 7,
+          "availableOn": "2026-10-30"
+        },
+        {
+          "id": "couplechallenge-halloween-e8",
+          "number": 8,
           "availableOn": "2026-10-30"
         }
       ]
@@ -158,60 +213,330 @@
         }
       ]
     },
-   {
-  "name": "Club der Reality Detektive",
-  "platform": "Joyn+",
-  "season": "Staffel 1",
-  "episodes": [
     {
-      "id": "realitydetektive-s1-e9-10",
-      "number": 9,
-      "availableOn": "2026-10-29"
+      "name": "Club der Reality Detektive",
+      "platform": "Joyn+",
+      "season": "Staffel 1",
+      "episodes": [
+        {
+          "id": "realitydetektive-s1-e9-10",
+          "number": 9,
+          "availableOn": "2026-10-29"
+        },
+        {
+          "id": "realitydetektive-s1-e10",
+          "number": 10,
+          "availableOn": "2026-10-29"
+        },
+        {
+          "id": "realitydetektive-s1-e11-12",
+          "number": 11,
+          "availableOn": "2026-11-05"
+        },
+        {
+          "id": "realitydetektive-s1-e12",
+          "number": 12,
+          "availableOn": "2026-11-05"
+        },
+        {
+          "id": "realitydetektive-s1-e13-14",
+          "number": 13,
+          "availableOn": "2026-11-12"
+        },
+        {
+          "id": "realitydetektive-s1-e14",
+          "number": 14,
+          "availableOn": "2026-11-12"
+        },
+        {
+          "id": "realitydetektive-s1-e15-16",
+          "number": 15,
+          "availableOn": "2026-11-19"
+        },
+        {
+          "id": "realitydetektive-s1-e16",
+          "number": 16,
+          "availableOn": "2026-11-19"
+        },
+        {
+          "id": "realitydetektive-s1-e17-18",
+          "number": 17,
+          "availableOn": "2026-11-26"
+        },
+        {
+          "id": "realitydetektive-s1-e18",
+          "number": 18,
+          "availableOn": "2026-11-26"
+        },
+        {
+          "id": "realitydetektive-s1-e19-20",
+          "number": 19,
+          "availableOn": "2026-12-03"
+        },
+        {
+          "id": "realitydetektive-s1-e20",
+          "number": 20,
+          "availableOn": "2026-12-03"
+        }
+      ]
     },
     {
-      "id": "realitydetektive-s1-e11-12",
-      "number": 11,
-      "availableOn": "2026-11-05"
+      "name": "The Power",
+      "platform": "Joyn+",
+      "season": "Staffel 2",
+      "episodes": [
+        {
+          "id": "thepower-s2-e1-5",
+          "number": 1,
+          "availableOn": "2026-10-20"
+        },
+        {
+          "id": "thepower-s2-e2",
+          "number": 2,
+          "availableOn": "2026-10-20"
+        },
+        {
+          "id": "thepower-s2-e3",
+          "number": 3,
+          "availableOn": "2026-10-20"
+        },
+        {
+          "id": "thepower-s2-e4",
+          "number": 4,
+          "availableOn": "2026-10-20"
+        },
+        {
+          "id": "thepower-s2-e5",
+          "number": 5,
+          "availableOn": "2026-10-20"
+        },
+        {
+          "id": "thepower-s2-e6-10",
+          "number": 6,
+          "availableOn": "2026-10-21"
+        },
+        {
+          "id": "thepower-s2-e7",
+          "number": 7,
+          "availableOn": "2026-10-21"
+        },
+        {
+          "id": "thepower-s2-e8",
+          "number": 8,
+          "availableOn": "2026-10-21"
+        },
+        {
+          "id": "thepower-s2-e9",
+          "number": 9,
+          "availableOn": "2026-10-21"
+        },
+        {
+          "id": "thepower-s2-e10",
+          "number": 10,
+          "availableOn": "2026-10-21"
+        },
+        {
+          "id": "thepower-s2-e11-15",
+          "number": 11,
+          "availableOn": "2026-10-27"
+        },
+        {
+          "id": "thepower-s2-e12",
+          "number": 12,
+          "availableOn": "2026-10-27"
+        },
+        {
+          "id": "thepower-s2-e13",
+          "number": 13,
+          "availableOn": "2026-10-27"
+        },
+        {
+          "id": "thepower-s2-e14",
+          "number": 14,
+          "availableOn": "2026-10-27"
+        },
+        {
+          "id": "thepower-s2-e15",
+          "number": 15,
+          "availableOn": "2026-10-27"
+        },
+        {
+          "id": "thepower-s2-e16-20",
+          "number": 16,
+          "availableOn": "2026-10-28"
+        },
+        {
+          "id": "thepower-s2-e17",
+          "number": 17,
+          "availableOn": "2026-10-28"
+        },
+        {
+          "id": "thepower-s2-e18",
+          "number": 18,
+          "availableOn": "2026-10-28"
+        },
+        {
+          "id": "thepower-s2-e19",
+          "number": 19,
+          "availableOn": "2026-10-28"
+        },
+        {
+          "id": "thepower-s2-e20",
+          "number": 20,
+          "availableOn": "2026-10-28"
+        },
+        {
+          "id": "thepower-s2-e21-25",
+          "number": 21,
+          "availableOn": "2026-11-03"
+        },
+        {
+          "id": "thepower-s2-e22",
+          "number": 22,
+          "availableOn": "2026-11-03"
+        },
+        {
+          "id": "thepower-s2-e23",
+          "number": 23,
+          "availableOn": "2026-11-03"
+        },
+        {
+          "id": "thepower-s2-e24",
+          "number": 24,
+          "availableOn": "2026-11-03"
+        },
+        {
+          "id": "thepower-s2-e25",
+          "number": 25,
+          "availableOn": "2026-11-03"
+        },
+        {
+          "id": "thepower-s2-e26-30",
+          "number": 26,
+          "availableOn": "2026-11-04"
+        },
+        {
+          "id": "thepower-s2-e27",
+          "number": 27,
+          "availableOn": "2026-11-04"
+        },
+        {
+          "id": "thepower-s2-e28",
+          "number": 28,
+          "availableOn": "2026-11-04"
+        },
+        {
+          "id": "thepower-s2-e29",
+          "number": 29,
+          "availableOn": "2026-11-04"
+        },
+        {
+          "id": "thepower-s2-e30",
+          "number": 30,
+          "availableOn": "2026-11-04"
+        },
+        {
+          "id": "thepower-s2-e31-35",
+          "number": 31,
+          "availableOn": "2026-11-10"
+        },
+        {
+          "id": "thepower-s2-e32",
+          "number": 32,
+          "availableOn": "2026-11-10"
+        },
+        {
+          "id": "thepower-s2-e33",
+          "number": 33,
+          "availableOn": "2026-11-10"
+        },
+        {
+          "id": "thepower-s2-e34",
+          "number": 34,
+          "availableOn": "2026-11-10"
+        },
+        {
+          "id": "thepower-s2-e35",
+          "number": 35,
+          "availableOn": "2026-11-10"
+        },
+        {
+          "id": "thepower-s2-e36-40",
+          "number": 36,
+          "availableOn": "2026-11-11"
+        },
+        {
+          "id": "thepower-s2-e37",
+          "number": 37,
+          "availableOn": "2026-11-11"
+        },
+        {
+          "id": "thepower-s2-e38",
+          "number": 38,
+          "availableOn": "2026-11-11"
+        },
+        {
+          "id": "thepower-s2-e39",
+          "number": 39,
+          "availableOn": "2026-11-11"
+        },
+        {
+          "id": "thepower-s2-e40",
+          "number": 40,
+          "availableOn": "2026-11-11"
+        },
+        {
+          "id": "thepower-s2-e41-45",
+          "number": 41,
+          "availableOn": "2026-11-17"
+        },
+        {
+          "id": "thepower-s2-e42",
+          "number": 42,
+          "availableOn": "2026-11-17"
+        },
+        {
+          "id": "thepower-s2-e43",
+          "number": 43,
+          "availableOn": "2026-11-17"
+        },
+        {
+          "id": "thepower-s2-e44",
+          "number": 44,
+          "availableOn": "2026-11-17"
+        },
+        {
+          "id": "thepower-s2-e45",
+          "number": 45,
+          "availableOn": "2026-11-17"
+        },
+        {
+          "id": "thepower-s2-e46-50",
+          "number": 46,
+          "availableOn": "2026-11-18"
+        },
+        {
+          "id": "thepower-s2-e47",
+          "number": 47,
+          "availableOn": "2026-11-18"
+        },
+        {
+          "id": "thepower-s2-e48",
+          "number": 48,
+          "availableOn": "2026-11-18"
+        },
+        {
+          "id": "thepower-s2-e49",
+          "number": 49,
+          "availableOn": "2026-11-18"
+        },
+        {
+          "id": "thepower-s2-e50",
+          "number": 50,
+          "availableOn": "2026-11-18"
+        }
+      ]
     },
-    {
-      "id": "realitydetektive-s1-e13-14",
-      "number": 13,
-      "availableOn": "2026-11-12"
-    },
-    {
-      "id": "realitydetektive-s1-e15-16",
-      "number": 15,
-      "availableOn": "2026-11-19"
-    },
-    {
-      "id": "realitydetektive-s1-e17-18",
-      "number": 17,
-      "availableOn": "2026-11-26"
-    },
-    {
-      "id": "realitydetektive-s1-e19-20",
-      "number": 19,
-      "availableOn": "2026-12-03"
-    }
-  ]
-},
-{
-  "name": "The Power",
-  "platform": "Joyn+",
-  "season": "Staffel 2",
-  "episodes": [
-    {"id":"thepower-s2-e1-5","number":1,"availableOn":"2026-10-20"},
-    {"id":"thepower-s2-e6-10","number":6,"availableOn":"2026-10-21"},
-    {"id":"thepower-s2-e11-15","number":11,"availableOn":"2026-10-27"},
-    {"id":"thepower-s2-e16-20","number":16,"availableOn":"2026-10-28"},
-    {"id":"thepower-s2-e21-25","number":21,"availableOn":"2026-11-03"},
-    {"id":"thepower-s2-e26-30","number":26,"availableOn":"2026-11-04"},
-    {"id":"thepower-s2-e31-35","number":31,"availableOn":"2026-11-10"},
-    {"id":"thepower-s2-e36-40","number":36,"availableOn":"2026-11-11"},
-    {"id":"thepower-s2-e41-45","number":41,"availableOn":"2026-11-17"},
-    {"id":"thepower-s2-e46-50","number":46,"availableOn":"2026-11-18"}
-  ]
-},
     {
       "name": "Forsthaus Rampensau Germany",
       "platform": "Joyn+",
@@ -223,8 +548,18 @@
           "availableOn": "2026-11-06"
         },
         {
+          "id": "forsthaus-germany-s4-e2",
+          "number": 2,
+          "availableOn": "2026-11-06"
+        },
+        {
           "id": "forsthaus-germany-s4-e3-4",
           "number": 3,
+          "availableOn": "2026-11-13"
+        },
+        {
+          "id": "forsthaus-germany-s4-e4",
+          "number": 4,
           "availableOn": "2026-11-13"
         },
         {
@@ -233,8 +568,18 @@
           "availableOn": "2026-11-20"
         },
         {
+          "id": "forsthaus-germany-s4-e6",
+          "number": 6,
+          "availableOn": "2026-11-20"
+        },
+        {
           "id": "forsthaus-germany-s4-e7-8",
           "number": 7,
+          "availableOn": "2026-11-27"
+        },
+        {
+          "id": "forsthaus-germany-s4-e8",
+          "number": 8,
           "availableOn": "2026-11-27"
         }
       ]
@@ -250,13 +595,28 @@
           "availableOn": "2026-10-26"
         },
         {
+          "id": "promibuessen-s5-e2",
+          "number": 2,
+          "availableOn": "2026-10-26"
+        },
+        {
           "id": "promibuessen-s5-e3-4",
           "number": 3,
           "availableOn": "2026-11-02"
         },
         {
+          "id": "promibuessen-s5-e4",
+          "number": 4,
+          "availableOn": "2026-11-02"
+        },
+        {
           "id": "promibuessen-s5-e5-6",
           "number": 5,
+          "availableOn": "2026-11-09"
+        },
+        {
+          "id": "promibuessen-s5-e6",
+          "number": 6,
           "availableOn": "2026-11-09"
         }
       ]
