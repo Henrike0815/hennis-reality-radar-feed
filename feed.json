@@ -1,3 +1,267 @@
 {
-  "shows": []
+  "updatedAt": "2026-10-30",
+  "shows": [
+    {
+      "name": "Temptation Island VIP",
+      "platform": "RTL+ Premium",
+      "season": "Staffel 7",
+      "episodes": [
+        {
+          "id": "temptation-vip-s7-e1",
+          "number": 1,
+          "availableOn": "2026-10-12"
+        },
+        {
+          "id": "temptation-vip-s7-e2",
+          "number": 2,
+          "availableOn": "2026-10-19"
+        },
+        {
+          "id": "temptation-vip-s7-e3",
+          "number": 3,
+          "availableOn": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "name": "Das Sommerhaus der Stars – Kampf der Promipaare",
+      "platform": "RTL+ Premium",
+      "season": "Staffel 11",
+      "episodes": [
+        {
+          "id": "sommerhaus-s11-e7",
+          "number": 7,
+          "availableOn": "2026-10-06"
+        },
+        {
+          "id": "sommerhaus-s11-e8",
+          "number": 8,
+          "availableOn": "2026-10-13"
+        },
+        {
+          "id": "sommerhaus-s11-e9",
+          "number": 9,
+          "availableOn": "2026-10-20"
+        },
+        {
+          "id": "sommerhaus-s11-e10",
+          "number": 10,
+          "availableOn": "2026-10-27"
+        },
+        {
+          "id": "sommerhaus-s11-e11",
+          "number": 11,
+          "availableOn": "2026-11-03"
+        }
+      ]
+    },
+    {
+      "name": "Are You The One? – Realitystars in Love",
+      "platform": "RTL+ Premium",
+      "season": "Staffel 6",
+      "episodes": [
+        {
+          "id": "ayto-ril-s6-e17-18",
+          "number": 17,
+          "availableOn": "2026-10-07"
+        },
+        {
+          "id": "ayto-ril-s6-e19-20",
+          "number": 19,
+          "availableOn": "2026-10-14"
+        },
+        {
+          "id": "ayto-ril-s6-e21-22",
+          "number": 21,
+          "availableOn": "2026-10-21"
+        }
+      ]
+    },
+    {
+      "name": "Love Island VIP",
+      "platform": "RTL+ Premium",
+      "season": "Staffel 3",
+      "episodes": [
+        {
+          "id": "loveisland-vip-s3-e7-8",
+          "number": 7,
+          "availableOn": "2026-10-07"
+        },
+        {
+          "id": "loveisland-vip-s3-e9-10",
+          "number": 9,
+          "availableOn": "2026-10-14"
+        },
+        {
+          "id": "loveisland-vip-s3-e11-12",
+          "number": 11,
+          "availableOn": "2026-10-21"
+        },
+        {
+          "id": "loveisland-vip-s3-e13-14",
+          "number": 13,
+          "availableOn": "2026-10-26"
+        }
+      ]
+    },
+    {
+      "name": "#CoupleChallenge – Halloween Edition",
+      "platform": "RTL+ Premium",
+      "season": "Halloween Edition",
+      "episodes": [
+        {
+          "id": "couplechallenge-halloween-e1-2",
+          "number": 1,
+          "availableOn": "2026-10-09"
+        },
+        {
+          "id": "couplechallenge-halloween-e3-4",
+          "number": 3,
+          "availableOn": "2026-10-16"
+        },
+        {
+          "id": "couplechallenge-halloween-e5-6",
+          "number": 5,
+          "availableOn": "2026-10-23"
+        },
+        {
+          "id": "couplechallenge-halloween-e7-8",
+          "number": 7,
+          "availableOn": "2026-10-30"
+        }
+      ]
+    },
+    {
+      "name": "Manhunt Saigon",
+      "platform": "YouTube",
+      "season": "Staffel 4",
+      "episodes": [
+        {
+          "id": "manhunt-s4-e0",
+          "number": 0,
+          "availableOn": "2026-10-21"
+        },
+        {
+          "id": "manhunt-s4-e1",
+          "number": 1,
+          "availableOn": "2026-10-25"
+        },
+        {
+          "id": "manhunt-s4-e2",
+          "number": 2,
+          "availableOn": "2026-10-28"
+        },
+        {
+          "id": "manhunt-s4-e3",
+          "number": 3,
+          "availableOn": "2026-11-01"
+        }
+      ]
+    },
+    {
+      "name": "Club der Reality Detektive",
+      "platform": "Joyn+",
+      "season": "Staffel 1",
+      "episodes": [
+        {
+          "id": "realitydetektive-s1-e11-12",
+          "number": 11,
+          "availableOn": "2026-11-05"
+        },
+        {
+          "id": "realitydetektive-s1-e13-14",
+          "number": 13,
+          "availableOn": "2026-11-12"
+        },
+        {
+          "id": "realitydetektive-s1-e15-16",
+          "number": 15,
+          "availableOn": "2026-11-19"
+        },
+        {
+          "id": "realitydetektive-s1-e17-18",
+          "number": 17,
+          "availableOn": "2026-11-26"
+        },
+        {
+          "id": "realitydetektive-s1-e19-20",
+          "number": 19,
+          "availableOn": "2026-12-03"
+        }
+      ]
+    },
+    {
+      "name": "Forsthaus Rampensau Germany",
+      "platform": "Joyn+",
+      "season": "Staffel 4",
+      "episodes": [
+        {
+          "id": "forsthaus-germany-s4-e1-2",
+          "number": 1,
+          "availableOn": "2026-11-06"
+        },
+        {
+          "id": "forsthaus-germany-s4-e3-4",
+          "number": 3,
+          "availableOn": "2026-11-13"
+        },
+        {
+          "id": "forsthaus-germany-s4-e5-6",
+          "number": 5,
+          "availableOn": "2026-11-20"
+        },
+        {
+          "id": "forsthaus-germany-s4-e7-8",
+          "number": 7,
+          "availableOn": "2026-11-27"
+        }
+      ]
+    },
+    {
+      "name": "Das große Promi-Büßen",
+      "platform": "Joyn+",
+      "season": "Staffel 5",
+      "episodes": [
+        {
+          "id": "promibuessen-s5-e1-2",
+          "number": 1,
+          "availableOn": "2026-10-26"
+        },
+        {
+          "id": "promibuessen-s5-e3-4",
+          "number": 3,
+          "availableOn": "2026-11-02"
+        },
+        {
+          "id": "promibuessen-s5-e5-6",
+          "number": 5,
+          "availableOn": "2026-11-09"
+        }
+      ]
+    },
+    {
+      "name": "Eating with My Ex VIP",
+      "platform": "Paramount+",
+      "season": "Staffel 1",
+      "episodes": [
+        {
+          "id": "eating-ex-vip-s1-e1",
+          "number": 1,
+          "availableOn": "2026-11-03"
+        }
+      ]
+    },
+    {
+      "name": "Germany Shore",
+      "platform": "Paramount+",
+      "season": "Staffel 6",
+      "episodes": [
+        {
+          "id": "germany-shore-s6-e1",
+          "number": 1,
+          "availableOn": "2026-11-24"
+        }
+      ]
+    }
+  ]
 }
