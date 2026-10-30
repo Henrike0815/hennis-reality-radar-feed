@@ -83,8 +83,7 @@ def main():
             number = int(match.group(1))
             discovered[number] = link
 
-    print("Vorhandene Folgen:", len(existing))
-     print("Gefundene RTL+-Folgenlinks:", len(discovered))
+        print("Gefundene RTL+-Folgenlinks:", len(discovered))
 
     for number in sorted(discovered):
         print("RTL+ gefunden: Folge", number, discovered[number])
