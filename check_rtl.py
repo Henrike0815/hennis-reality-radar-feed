@@ -20,6 +20,23 @@ class LinkFinder(HTMLParser):
                 self.links.append(urljoin(URL, href))
 
 
+def load_page(url):
+    request = urllib.request.Request(
+        url,
+        headers={"User-Agent": "Mozilla/5.0"},
+    )
+
+    with urllib.request.urlopen(
+        request, timeout=20
+    ) as response:
+        html = response.read().decode(
+            "utf-8", errors="replace"
+        )
+        print("HTTP-Status:", response.status)
+
+    return html
+
+
 def main():
     print("REALITY RADAR - RTL+ FOLGENVERGLEICH")
     print("-----------------------------------")
@@ -46,68 +63,10 @@ def main():
         for episode in show["episodes"]
     }
 
-    request = urllib.request.Request(
-        URL,
-        headers={"User-Agent": "Mozilla/5.0"},
-    )
-
-    with urllib.request.urlopen(
-        request, timeout=20
-    ) as response:
-        html = response.read().decode(
-            "utf-8", errors="replace"
-        )
-        print("HTTP-Status:", response.status)
+    print("UEBERSICHTSSEITE")
+    html = load_page(URL)
     print("HTML-Laenge:", len(html))
-    print("Datum 2026-10-28:", "2026-10-28" in html)
-    print("Datum 2026-10-21:", "2026-10-21" in html)
-    print("Begriff releaseDate:", "releaseDate" in html)
-    print("Datum 2026-11-11 vorhanden:", "2026-11-11" in html)
-    print("Datum 2026-11-25 vorhanden:", "2026-11-25" in html)
-       episode_url = (
-        "https://plus.rtl.de/love-island-vip-p_3030/"
-        "video/folge-14-2026-c_2174504"
-    )
 
-    episode_request = urllib.request.Request(
-        episode_url,
-        headers={"User-Agent": "Mozilla/5.0"},
-    )
-
-    with urllib.request.urlopen(
-        episode_request, timeout=20
-    ) as response:
-        episode_html = response.read().decode(
-            "utf-8", errors="replace"
-        )
-
-    print("FOLGENSEITE - TEST")
-    print("HTML-Laenge:", len(episode_html))
-    print("2026-10-28:", "2026-10-28" in episode_html)
-    print("releaseDate:", "releaseDate" in episode_html)
-    print("datePublished:", "datePublished" in episode_html) 
-        episode_url = (
-        "https://plus.rtl.de/love-island-vip-p_3030/"
-        "video/folge-14-2026-c_2174504"
-    )
-
-    episode_request = urllib.request.Request(
-        episode_url,
-        headers={"User-Agent": "Mozilla/5.0"},
-    )
-
-    with urllib.request.urlopen(
-        episode_request, timeout=20
-    ) as response:
-        episode_html = response.read().decode(
-            "utf-8", errors="replace"
-        )
-
-    print("FOLGENSEITE - TEST")
-    print("HTML-Laenge:", len(episode_html))
-    print("2026-10-28:", "2026-10-28" in episode_html)
-    print("releaseDate:", "releaseDate" in episode_html)
-    print("datePublished:", "datePublished" in episode_html)
     finder = LinkFinder()
     finder.feed(html)
 
@@ -132,10 +91,15 @@ def main():
             number = int(match.group(1))
             discovered[number] = link
 
-        print("Gefundene RTL+-Folgenlinks:", len(discovered))
+    print("Vorhandene Folgen:", len(existing))
+    print("Gefundene RTL+-Folgenlinks:", len(discovered))
 
     for number in sorted(discovered):
-        print("RTL+ gefunden: Folge", number, discovered[number])
+        print(
+            "RTL+ gefunden: Folge",
+            number,
+            discovered[number],
+        )
 
     candidates = sorted(set(discovered) - existing)
 
@@ -148,6 +112,22 @@ def main():
     if not candidates:
         print("Keine unbekannten Folgennummern gefunden.")
 
+    print("-----------------------------------")
+    print("FOLGENSEITE - TEST")
+
+    episode_url = (
+        "https://plus.rtl.de/love-island-vip-p_3030/"
+        "video/folge-14-2026-c_2174504"
+    )
+
+    episode_html = load_page(episode_url)
+
+    print("HTML-Laenge:", len(episode_html))
+    print("2026-10-28:", "2026-10-28" in episode_html)
+    print("releaseDate:", "releaseDate" in episode_html)
+    print("datePublished:", "datePublished" in episode_html)
+
+    print("-----------------------------------")
     print("Hinweis: Staffel und Datum nicht bestaetigt.")
     print("Die feed.json wurde nicht veraendert.")
 
