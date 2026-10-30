@@ -130,7 +130,11 @@ def main():
         print(episode_html[max(0, position - 150):position + 150])
     print("releaseDate:", "releaseDate" in episode_html)
     print("datePublished:", "datePublished" in episode_html)
-
+    dates = re.findall(
+        r'"availabilityStarts"\s*:\s*"([^"]+)"',
+        episode_html
+    )
+    print("RTL+ Verfügbarkeitsdaten:", sorted(set(dates)))
     print("-----------------------------------")
     print("Hinweis: Staffel und Datum nicht bestaetigt.")
     print("Die feed.json wurde nicht veraendert.")
