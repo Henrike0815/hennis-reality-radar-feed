@@ -124,6 +124,10 @@ def main():
 
     print("HTML-Laenge:", len(episode_html))
     print("2026-10-28:", "2026-10-28" in episode_html)
+    position = episode_html.find("2026-10-28")
+    if position >= 0:
+        print("DATUM-KONTEXT:")
+        print(episode_html[max(0, position - 150):position + 150])
     print("releaseDate:", "releaseDate" in episode_html)
     print("datePublished:", "datePublished" in episode_html)
 
