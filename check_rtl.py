@@ -136,6 +136,17 @@ def main():
         episode_html
     )
     print("RTL+ Verfügbarkeitsdaten:", sorted(set(dates)))
+    abo_dates = re.findall(
+        r'"category"\s*:\s*"subscription"'
+        r'.{0,500}?"availabilityStarts"\s*:\s*"([^"]+)"',
+        episode_html
+    )
+
+    if abo_dates:
+        abo_date = datetime.fromisoformat(abo_dates[0]).date()
+        print("ABO-START ERKANNT:", abo_date.isoformat())
+    else:
+        print("KEIN ABO-START ERKANNT")
     print(
         "ABO-ZUGANG VORHANDEN:",
         '"category":"subscription"' in episode_html
