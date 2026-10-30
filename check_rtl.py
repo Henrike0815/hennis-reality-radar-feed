@@ -1,80 +1,99 @@
 
+import json
 import re
 import urllib.request
-import urllib.error
 from html.parser import HTMLParser
 
 URL = "https://plus.rtl.de/love-island-vip-p_3030"
 
 
-class TextExtractor(HTMLParser):
+class DataFinder(HTMLParser):
     def __init__(self):
         super().__init__()
-        self.parts = []
-        self.skip = 0
+        self.scripts = []
+
+        self.in_script = False
+        self.script_type = ""
+        self.current = []
 
     def handle_starttag(self, tag, attrs):
-        if tag in ("script", "style"):
-            self.skip += 1
-
-    def handle_endtag(self, tag):
-        if tag in ("script", "style") and self.skip:
-            self.skip -= 1
+        if tag == "script":
+            attributes = dict(attrs)
+            self.in_script = True
+            self.script_type = attributes.get("type", "")
+            self.current = []
 
     def handle_data(self, data):
-        if not self.skip and data.strip():
-            self.parts.append(data.strip())
+        if self.in_script:
+            self.current.append(data)
+
+    def handle_endtag(self, tag):
+        if tag == "script" and self.in_script:
+            self.scripts.append((
+                self.script_type,
+                "".join(self.current)
+            ))
+            self.in_script = False
 
 
 def main():
-    print("REALITY RADAR - RTL+ FOLGENFINDER")
+    print("REALITY RADAR - RTL+ DATENANALYSE")
     print("--------------------------------")
 
     request = urllib.request.Request(
         URL,
-        headers={"User-Agent": "Mozilla/5.0"},
+        headers={"User-Agent": "Mozilla/5.0"}
     )
 
-    try:
-        with urllib.request.urlopen(
-            request, timeout=20
-        ) as response:
-            html = response.read().decode(
-                "utf-8", errors="replace"
-            )
-            print("HTTP-Status:", response.status)
+    with urllib.request.urlopen(
+        request, timeout=20
+    ) as response:
+        html = response.read().decode(
+            "utf-8", errors="replace"
+        )
+        print("HTTP-Status:", response.status)
 
-    except Exception as error:
-        print("RTL+-Abruf fehlgeschlagen:", error)
-        return
+    finder = DataFinder()
+    finder.feed(html)
 
-    parser = TextExtractor()
-    parser.feed(html)
-    text = " ".join(parser.parts)
+    print("Gefundene Script-Bloecke:", len(finder.scripts))
 
-    patterns = [
-        r"Staffel\s*\d+",
-        r"Folge\s*\d+",
-        r"Episode\s*\d+",
-        r"\d{1,2}\.\d{1,2}\.\d{4}",
+    keywords = [
+        "episodeNumber",
+        "seasonNumber",
+        "releaseDate",
+        "publicationDate",
+        "availableFrom",
+        "episodes",
     ]
 
-    print("\nGefundene Hinweise:")
+    for keyword in keywords:
+        count = len(re.findall(
+            re.escape(keyword),
+            html,
+            flags=re.IGNORECASE
+        ))
+        print(f"{keyword}: {count} Treffer")
 
-    for pattern in patterns:
-        matches = re.findall(
-            pattern, text, flags=re.IGNORECASE
-        )
-        unique = list(dict.fromkeys(matches))
+    print("\nJSON-Script-Bloecke:")
 
-        print(f"\nSuchmuster: {pattern}")
-        print(f"Treffer: {len(matches)}")
+    for script_type, content in finder.scripts:
+        if "json" not in script_type.lower():
+            continue
 
-        for match in unique[:15]:
-            print(" -", match)
+        try:
+            data = json.loads(content)
+        except (ValueError, TypeError):
+            continue
 
-    print("\nRTL+-Analyse abgeschlossen.")
-    print("Die feed.json wurde nicht verändert.")
+        print("JSON-Typ:", script_type)
+        print("Oberste Struktur:", type(data).__name__)
+
+        if isinstance(data, dict):
+            print("Felder:", list(data.keys())[:15])
+
+    print("\nAnalyse abgeschlossen.")
+    print("Keine Dateien wurden veraendert.")
 
 
 if __name__ == "__main__":
