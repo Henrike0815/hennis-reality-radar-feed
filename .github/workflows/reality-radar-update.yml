@@ -71,3 +71,6 @@ jobs:
           print("Alle Folgen-IDs sind eindeutig.")
           print("Reality Radar Prüfung erfolgreich!")
           PY
+
+      - name: Love Island VIP Folgen vergleichen
+        run: python3 check_love_island.py
