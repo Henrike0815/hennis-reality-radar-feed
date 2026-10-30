@@ -58,7 +58,9 @@ def main():
             "utf-8", errors="replace"
         )
         print("HTTP-Status:", response.status)
-
+    print("HTML-Laenge:", len(html))
+    print("Datum 2026-11-11 vorhanden:", "2026-11-11" in html)
+    print("Datum 2026-11-25 vorhanden:", "2026-11-25" in html)
     finder = LinkFinder()
     finder.feed(html)
 
