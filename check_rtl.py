@@ -84,9 +84,10 @@ def main():
             discovered[number] = link
 
     print("Vorhandene Folgen:", len(existing))
-    print("Gefundene RTL+-Folgenlinks:", len(discovered))
+     print("Gefundene RTL+-Folgenlinks:", len(discovered))
+
     for number in sorted(discovered):
-    print("RTL+ gefunden: Folge", number, discovered[number])
+        print("RTL+ gefunden: Folge", number, discovered[number])
 
     candidates = sorted(set(discovered) - existing)
 
