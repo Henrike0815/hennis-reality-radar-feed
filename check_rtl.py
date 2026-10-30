@@ -135,6 +135,10 @@ def main():
         episode_html
     )
     print("RTL+ Verfügbarkeitsdaten:", sorted(set(dates)))
+    print(
+        "ABO-ZUGANG VORHANDEN:",
+        '"category":"subscription"' in episode_html
+    )
     position = episode_html.find("2026-10-28T22:15:00")
     if position >= 0:
         print("VERFUEGBARKEIT-KONTEXT:")
