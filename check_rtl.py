@@ -101,6 +101,27 @@ def main():
             number,
             discovered[number],
         )
+    print("-----------------------------------")
+    print("AUTOMATISCHE ABO-DATUMSPRUEFUNG")
+
+    for number, link in sorted(discovered.items()):
+        try:
+            page_html = load_page(link)
+
+            abo_dates = re.findall(
+                r'"category"\s*:\s*"subscription"'
+                r'.{0,500}?"availabilityStarts"\s*:\s*"([^"]+)"',
+                page_html,
+            )
+
+            if len(set(abo_dates)) == 1:
+                date = datetime.fromisoformat(abo_dates[0]).date()
+                print(f"Folge {number}: ABO {date.isoformat()}")
+            else:
+                print(f"Folge {number}: Kein eindeutiger ABO-Start")
+
+        except Exception as error:
+            print(f"Folge {number}: Fehler bei der Pruefung: {error}")
 
     candidates = sorted(set(discovered) - existing)
 
