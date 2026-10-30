@@ -1,4 +1,5 @@
 
+import re
 import urllib.request
 import urllib.error
 from html.parser import HTMLParser
@@ -26,15 +27,12 @@ class TextExtractor(HTMLParser):
 
 
 def main():
-    print("REALITY RADAR - RTL+ TEST")
-    print("------------------------")
+    print("REALITY RADAR - RTL+ FOLGENFINDER")
+    print("--------------------------------")
 
     request = urllib.request.Request(
         URL,
-        headers={
-            "User-Agent": "Mozilla/5.0",
-            "Accept": "text/html",
-        },
+        headers={"User-Agent": "Mozilla/5.0"},
     )
 
     try:
@@ -46,28 +44,37 @@ def main():
             )
             print("HTTP-Status:", response.status)
 
-    except urllib.error.HTTPError as error:
-        print("RTL+ antwortet mit HTTP:", error.code)
-        return
-
     except Exception as error:
-        print("Abruf fehlgeschlagen:", error)
+        print("RTL+-Abruf fehlgeschlagen:", error)
         return
 
     parser = TextExtractor()
     parser.feed(html)
-
     text = " ".join(parser.parts)
 
-    print("HTML-Zeichen:", len(html))
-    print("Sichtbare Textzeichen:", len(text))
-    print(
-        "Love Island im Text:",
-        "love island" in text.lower(),
-    )
+    patterns = [
+        r"Staffel\s*\d+",
+        r"Folge\s*\d+",
+        r"Episode\s*\d+",
+        r"\d{1,2}\.\d{1,2}\.\d{4}",
+    ]
 
-    print("RTL+-Abrufprüfung abgeschlossen.")
-    print("Keine Dateien wurden verändert.")
+    print("\nGefundene Hinweise:")
+
+    for pattern in patterns:
+        matches = re.findall(
+            pattern, text, flags=re.IGNORECASE
+        )
+        unique = list(dict.fromkeys(matches))
+
+        print(f"\nSuchmuster: {pattern}")
+        print(f"Treffer: {len(matches)}")
+
+        for match in unique[:15]:
+            print(" -", match)
+
+    print("\nRTL+-Analyse abgeschlossen.")
+    print("Die feed.json wurde nicht verändert.")
 
 
 if __name__ == "__main__":
