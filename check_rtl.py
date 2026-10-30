@@ -117,7 +117,7 @@ def main():
 
     episode_url = (
         "https://plus.rtl.de/love-island-vip-p_3030/"
-        "video/folge-13-2026-c_2174495"
+        "video/folge-11-2026-c_2163282"
     )
 
     episode_html = load_page(episode_url)
