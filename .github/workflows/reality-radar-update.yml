@@ -10,11 +10,29 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  check-feed:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Teste Reality Radar
+      - name: Repository laden
+        uses: actions/checkout@v4
+
+      - name: Folgenliste prüfen
+        shell: bash
         run: |
-          echo "Hallo vom Reality Radar!"
-          echo "Die automatische Ausführung funktioniert."
-          echo "Die Folgenliste bleibt unverändert."
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path("feed.json")
+          if not path.exists():
+              raise SystemExit("FEHLER: feed.json fehlt!")
+
+          with path.open(encoding="utf-8") as f:
+              feed = json.load(f)
+
+          print("JSON ist gültig.")
+          print("Die Folgenliste wurde erfolgreich gelesen.")
+          print("Datentyp:", type(feed).__name__)
+          print("Reality Radar Prüfung abgeschlossen!")
+          PY
