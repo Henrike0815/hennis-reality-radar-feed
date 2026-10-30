@@ -32,7 +32,42 @@ jobs:
               feed = json.load(f)
 
           print("JSON ist gültig.")
-          print("Die Folgenliste wurde erfolgreich gelesen.")
-          print("Datentyp:", type(feed).__name__)
-          print("Reality Radar Prüfung abgeschlossen!")
+
+          def find_episodes(value):
+              if isinstance(value, dict):
+                  if "id" in value and (
+                      "availableOn" in value
+                      or "episode" in value
+                  ):
+                      yield value
+
+                  for child in value.values():
+                      yield from find_episodes(child)
+
+              elif isinstance(value, list):
+                  for child in value:
+                      yield from find_episodes(child)
+
+          episodes = list(find_episodes(feed))
+          ids = [str(ep["id"]) for ep in episodes]
+
+          if not episodes:
+              raise SystemExit(
+                  "FEHLER: Keine Folgen gefunden!"
+              )
+
+          if len(ids) != len(set(ids)):
+              from collections import Counter
+              duplicates = [
+                  key for key, count
+                  in Counter(ids).items()
+                  if count > 1
+              ]
+              raise SystemExit(
+                  f"FEHLER: Doppelte IDs: {duplicates}"
+              )
+
+          print(f"Gefundene Folgen: {len(episodes)}")
+          print("Alle Folgen-IDs sind eindeutig.")
+          print("Reality Radar Prüfung erfolgreich!")
           PY
