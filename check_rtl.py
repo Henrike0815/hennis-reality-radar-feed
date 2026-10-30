@@ -1,4 +1,6 @@
 
+import json
+import re
 import urllib.request
 from html.parser import HTMLParser
 from urllib.parse import urljoin, urlparse
@@ -12,19 +14,37 @@ class LinkFinder(HTMLParser):
         self.links = []
 
     def handle_starttag(self, tag, attrs):
-        if tag != "a":
-            return
-
-        attributes = dict(attrs)
-        href = attributes.get("href")
-
-        if href:
-            self.links.append(urljoin(URL, href))
+        if tag == "a":
+            href = dict(attrs).get("href")
+            if href:
+                self.links.append(urljoin(URL, href))
 
 
 def main():
-    print("REALITY RADAR - RTL+ LINK-FINDER")
-    print("--------------------------------")
+    print("REALITY RADAR - RTL+ FOLGENVERGLEICH")
+    print("-----------------------------------")
+
+    with open("feed.json", encoding="utf-8") as file:
+        feed = json.load(file)
+
+    shows = feed if isinstance(feed, list) else feed["shows"]
+
+    show = next(
+        (
+            item for item in shows
+            if item.get("name") == "Love Island VIP"
+            and item.get("season") == "Staffel 3"
+        ),
+        None,
+    )
+
+    if show is None:
+        raise ValueError("Love Island VIP Staffel 3 fehlt")
+
+    existing = {
+        episode["number"]
+        for episode in show["episodes"]
+    }
 
     request = urllib.request.Request(
         URL,
@@ -42,36 +62,43 @@ def main():
     finder = LinkFinder()
     finder.feed(html)
 
-    links = sorted(set(finder.links))
+    discovered = {}
 
-    print("Gefundene Links insgesamt:", len(links))
+    for link in finder.links:
+        parsed = urlparse(link)
 
-    keywords = [
-        "love-island",
-        "folge",
-        "episode",
-        "staffel",
-    ]
+        if parsed.hostname != "plus.rtl.de":
+            continue
 
-    matches = [
-        link for link in links
-        if urlparse(link).hostname in (
-            "plus.rtl.de",
-            "www.plus.rtl.de",
+        if "/love-island-vip-p_3030/video/" not in parsed.path:
+            continue
+
+        match = re.search(
+            r"/folge-(\d+)-2026-c_",
+            parsed.path,
+            flags=re.IGNORECASE,
         )
-        and any(
-            word in link.lower()
-            for word in keywords
-        )
-    ]
 
-    print("Passende RTL+-Links:", len(matches))
+        if match:
+            number = int(match.group(1))
+            discovered[number] = link
 
-    for link in matches[:40]:
-        print("LINK:", link)
+    print("Vorhandene Folgen:", len(existing))
+    print("Gefundene RTL+-Folgenlinks:", len(discovered))
 
-    print("\nAnalyse abgeschlossen.")
-    print("Keine Dateien wurden veraendert.")
+    candidates = sorted(set(discovered) - existing)
+
+    print("Moegliche neue Folgen:", len(candidates))
+
+    for number in candidates:
+        print("PRUEFEN: Folge", number)
+        print("LINK:", discovered[number])
+
+    if not candidates:
+        print("Keine unbekannten Folgennummern gefunden.")
+
+    print("Hinweis: Staffel und Datum nicht bestaetigt.")
+    print("Die feed.json wurde nicht veraendert.")
 
 
 if __name__ == "__main__":
