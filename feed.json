@@ -20,6 +20,61 @@
           "id": "temptation-vip-s7-e3",
           "number": 3,
           "availableOn": "2026-10-26"
+        },
+        {
+          "id": "temptation-vip-s7-e4",
+          "number": 4,
+          "availableOn": "2026-11-02"
+        },
+        {
+          "id": "temptation-vip-s7-e5",
+          "number": 5,
+          "availableOn": "2026-11-09"
+        },
+        {
+          "id": "temptation-vip-s7-e6",
+          "number": 6,
+          "availableOn": "2026-11-16"
+        },
+        {
+          "id": "temptation-vip-s7-e7",
+          "number": 7,
+          "availableOn": "2026-11-23"
+        },
+        {
+          "id": "temptation-vip-s7-e8",
+          "number": 8,
+          "availableOn": "2026-11-30"
+        },
+        {
+          "id": "temptation-vip-s7-e9",
+          "number": 9,
+          "availableOn": "2026-12-07"
+        },
+        {
+          "id": "temptation-vip-s7-e10",
+          "number": 10,
+          "availableOn": "2026-12-14"
+        },
+        {
+          "id": "temptation-vip-s7-e11",
+          "number": 11,
+          "availableOn": "2026-12-21"
+        },
+        {
+          "id": "temptation-vip-s7-e12",
+          "number": 12,
+          "availableOn": "2026-12-28"
+        },
+        {
+          "id": "temptation-vip-s7-e13",
+          "number": 13,
+          "availableOn": "2027-01-04"
+        },
+        {
+          "id": "temptation-vip-s7-e14",
+          "number": 14,
+          "availableOn": "2027-01-11"
         }
       ]
     },
@@ -276,6 +331,36 @@
           "id": "loveisland-vip-s3-e14",
           "number": 14,
           "availableOn": "2026-10-28"
+        },
+        {
+          "id": "love-island-vip-s3-e15",
+          "number": 15,
+          "availableOn": "2026-11-11"
+        },
+        {
+          "id": "love-island-vip-s3-e16",
+          "number": 16,
+          "availableOn": "2026-11-11"
+        },
+        {
+          "id": "love-island-vip-s3-e17",
+          "number": 17,
+          "availableOn": "2026-11-18"
+        },
+        {
+          "id": "love-island-vip-s3-e18",
+          "number": 18,
+          "availableOn": "2026-11-18"
+        },
+        {
+          "id": "love-island-vip-s3-e19",
+          "number": 19,
+          "availableOn": "2026-11-25"
+        },
+        {
+          "id": "love-island-vip-s3-e20",
+          "number": 20,
+          "availableOn": "2026-11-25"
         }
       ]
     },
