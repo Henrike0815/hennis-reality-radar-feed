@@ -64,6 +64,50 @@ def main():
     print("Begriff releaseDate:", "releaseDate" in html)
     print("Datum 2026-11-11 vorhanden:", "2026-11-11" in html)
     print("Datum 2026-11-25 vorhanden:", "2026-11-25" in html)
+       episode_url = (
+        "https://plus.rtl.de/love-island-vip-p_3030/"
+        "video/folge-14-2026-c_2174504"
+    )
+
+    episode_request = urllib.request.Request(
+        episode_url,
+        headers={"User-Agent": "Mozilla/5.0"},
+    )
+
+    with urllib.request.urlopen(
+        episode_request, timeout=20
+    ) as response:
+        episode_html = response.read().decode(
+            "utf-8", errors="replace"
+        )
+
+    print("FOLGENSEITE - TEST")
+    print("HTML-Laenge:", len(episode_html))
+    print("2026-10-28:", "2026-10-28" in episode_html)
+    print("releaseDate:", "releaseDate" in episode_html)
+    print("datePublished:", "datePublished" in episode_html) 
+        episode_url = (
+        "https://plus.rtl.de/love-island-vip-p_3030/"
+        "video/folge-14-2026-c_2174504"
+    )
+
+    episode_request = urllib.request.Request(
+        episode_url,
+        headers={"User-Agent": "Mozilla/5.0"},
+    )
+
+    with urllib.request.urlopen(
+        episode_request, timeout=20
+    ) as response:
+        episode_html = response.read().decode(
+            "utf-8", errors="replace"
+        )
+
+    print("FOLGENSEITE - TEST")
+    print("HTML-Laenge:", len(episode_html))
+    print("2026-10-28:", "2026-10-28" in episode_html)
+    print("releaseDate:", "releaseDate" in episode_html)
+    print("datePublished:", "datePublished" in episode_html)
     finder = LinkFinder()
     finder.feed(html)
 
