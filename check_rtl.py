@@ -135,6 +135,10 @@ def main():
         episode_html
     )
     print("RTL+ Verfügbarkeitsdaten:", sorted(set(dates)))
+    position = episode_html.find("2026-10-28T22:15:00")
+    if position >= 0:
+        print("VERFUEGBARKEIT-KONTEXT:")
+        print(episode_html[max(0, position - 250):position + 250])
     print("-----------------------------------")
     print("Hinweis: Staffel und Datum nicht bestaetigt.")
     print("Die feed.json wurde nicht veraendert.")
