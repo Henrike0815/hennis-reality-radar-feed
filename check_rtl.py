@@ -1,48 +1,34 @@
 
-import json
-import re
 import urllib.request
 from html.parser import HTMLParser
+from urllib.parse import urljoin, urlparse
 
 URL = "https://plus.rtl.de/love-island-vip-p_3030"
 
 
-class DataFinder(HTMLParser):
+class LinkFinder(HTMLParser):
     def __init__(self):
         super().__init__()
-        self.scripts = []
-
-        self.in_script = False
-        self.script_type = ""
-        self.current = []
+        self.links = []
 
     def handle_starttag(self, tag, attrs):
-        if tag == "script":
-            attributes = dict(attrs)
-            self.in_script = True
-            self.script_type = attributes.get("type", "")
-            self.current = []
+        if tag != "a":
+            return
 
-    def handle_data(self, data):
-        if self.in_script:
-            self.current.append(data)
+        attributes = dict(attrs)
+        href = attributes.get("href")
 
-    def handle_endtag(self, tag):
-        if tag == "script" and self.in_script:
-            self.scripts.append((
-                self.script_type,
-                "".join(self.current)
-            ))
-            self.in_script = False
+        if href:
+            self.links.append(urljoin(URL, href))
 
 
 def main():
-    print("REALITY RADAR - RTL+ DATENANALYSE")
+    print("REALITY RADAR - RTL+ LINK-FINDER")
     print("--------------------------------")
 
     request = urllib.request.Request(
         URL,
-        headers={"User-Agent": "Mozilla/5.0"}
+        headers={"User-Agent": "Mozilla/5.0"},
     )
 
     with urllib.request.urlopen(
@@ -53,44 +39,36 @@ def main():
         )
         print("HTTP-Status:", response.status)
 
-    finder = DataFinder()
+    finder = LinkFinder()
     finder.feed(html)
 
-    print("Gefundene Script-Bloecke:", len(finder.scripts))
+    links = sorted(set(finder.links))
+
+    print("Gefundene Links insgesamt:", len(links))
 
     keywords = [
-        "episodeNumber",
-        "seasonNumber",
-        "releaseDate",
-        "publicationDate",
-        "availableFrom",
-        "episodes",
+        "love-island",
+        "folge",
+        "episode",
+        "staffel",
     ]
 
-    for keyword in keywords:
-        count = len(re.findall(
-            re.escape(keyword),
-            html,
-            flags=re.IGNORECASE
-        ))
-        print(f"{keyword}: {count} Treffer")
+    matches = [
+        link for link in links
+        if urlparse(link).hostname in (
+            "plus.rtl.de",
+            "www.plus.rtl.de",
+        )
+        and any(
+            word in link.lower()
+            for word in keywords
+        )
+    ]
 
-    print("\nJSON-Script-Bloecke:")
+    print("Passende RTL+-Links:", len(matches))
 
-    for script_type, content in finder.scripts:
-        if "json" not in script_type.lower():
-            continue
-
-        try:
-            data = json.loads(content)
-        except (ValueError, TypeError):
-            continue
-
-        print("JSON-Typ:", script_type)
-        print("Oberste Struktur:", type(data).__name__)
-
-        if isinstance(data, dict):
-            print("Felder:", list(data.keys())[:15])
+    for link in matches[:40]:
+        print("LINK:", link)
 
     print("\nAnalyse abgeschlossen.")
     print("Keine Dateien wurden veraendert.")
