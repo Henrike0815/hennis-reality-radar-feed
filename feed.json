@@ -1,4 +1,4 @@
-        {
+{
   "updatedAt": "2026-10-30",
   "shows": [
     {
@@ -28,6 +28,36 @@
       "platform": "RTL+ Premium",
       "season": "Staffel 11",
       "episodes": [
+        {
+          "id": "sommerhaus-s11-e1",
+          "number": 1,
+          "availableOn": "2026-08-25"
+        },
+        {
+          "id": "sommerhaus-s11-e2",
+          "number": 2,
+          "availableOn": "2026-09-01"
+        },
+        {
+          "id": "sommerhaus-s11-e3",
+          "number": 3,
+          "availableOn": "2026-09-08"
+        },
+        {
+          "id": "sommerhaus-s11-e4",
+          "number": 4,
+          "availableOn": "2026-09-15"
+        },
+        {
+          "id": "sommerhaus-s11-e5",
+          "number": 5,
+          "availableOn": "2026-09-22"
+        },
+        {
+          "id": "sommerhaus-s11-e6",
+          "number": 6,
+          "availableOn": "2026-09-29"
+        },
         {
           "id": "sommerhaus-s11-e7",
           "number": 7,
@@ -60,6 +90,86 @@
       "platform": "RTL+ Premium",
       "season": "Staffel 6",
       "episodes": [
+        {
+          "id": "ayto-ril-s6-e1",
+          "number": 1,
+          "availableOn": "2026-08-12"
+        },
+        {
+          "id": "ayto-ril-s6-e2",
+          "number": 2,
+          "availableOn": "2026-08-12"
+        },
+        {
+          "id": "ayto-ril-s6-e3",
+          "number": 3,
+          "availableOn": "2026-08-19"
+        },
+        {
+          "id": "ayto-ril-s6-e4",
+          "number": 4,
+          "availableOn": "2026-08-19"
+        },
+        {
+          "id": "ayto-ril-s6-e5",
+          "number": 5,
+          "availableOn": "2026-08-26"
+        },
+        {
+          "id": "ayto-ril-s6-e6",
+          "number": 6,
+          "availableOn": "2026-08-26"
+        },
+        {
+          "id": "ayto-ril-s6-e7",
+          "number": 7,
+          "availableOn": "2026-09-02"
+        },
+        {
+          "id": "ayto-ril-s6-e8",
+          "number": 8,
+          "availableOn": "2026-09-02"
+        },
+        {
+          "id": "ayto-ril-s6-e9",
+          "number": 9,
+          "availableOn": "2026-09-09"
+        },
+        {
+          "id": "ayto-ril-s6-e10",
+          "number": 10,
+          "availableOn": "2026-09-09"
+        },
+        {
+          "id": "ayto-ril-s6-e11",
+          "number": 11,
+          "availableOn": "2026-09-16"
+        },
+        {
+          "id": "ayto-ril-s6-e12",
+          "number": 12,
+          "availableOn": "2026-09-16"
+        },
+        {
+          "id": "ayto-ril-s6-e13",
+          "number": 13,
+          "availableOn": "2026-09-23"
+        },
+        {
+          "id": "ayto-ril-s6-e14",
+          "number": 14,
+          "availableOn": "2026-09-23"
+        },
+        {
+          "id": "ayto-ril-s6-e15",
+          "number": 15,
+          "availableOn": "2026-09-30"
+        },
+        {
+          "id": "ayto-ril-s6-e16",
+          "number": 16,
+          "availableOn": "2026-09-30"
+        },
         {
           "id": "ayto-ril-s6-e17-18",
           "number": 17,
@@ -98,6 +208,36 @@
       "season": "Staffel 3",
       "episodes": [
         {
+          "id": "loveisland-vip-s3-e1",
+          "number": 1,
+          "availableOn": "2026-09-16"
+        },
+        {
+          "id": "loveisland-vip-s3-e2",
+          "number": 2,
+          "availableOn": "2026-09-16"
+        },
+        {
+          "id": "loveisland-vip-s3-e3",
+          "number": 3,
+          "availableOn": "2026-09-23"
+        },
+        {
+          "id": "loveisland-vip-s3-e4",
+          "number": 4,
+          "availableOn": "2026-09-23"
+        },
+        {
+          "id": "loveisland-vip-s3-e5",
+          "number": 5,
+          "availableOn": "2026-09-30"
+        },
+        {
+          "id": "loveisland-vip-s3-e6",
+          "number": 6,
+          "availableOn": "2026-09-30"
+        },
+        {
           "id": "loveisland-vip-s3-e7-8",
           "number": 7,
           "availableOn": "2026-10-07"
@@ -130,12 +270,12 @@
         {
           "id": "loveisland-vip-s3-e13-14",
           "number": 13,
-          "availableOn": "2026-10-26"
+          "availableOn": "2026-10-28"
         },
         {
           "id": "loveisland-vip-s3-e14",
           "number": 14,
-          "availableOn": "2026-10-26"
+          "availableOn": "2026-10-28"
         }
       ]
     },
@@ -218,6 +358,46 @@
       "platform": "Joyn+",
       "season": "Staffel 1",
       "episodes": [
+        {
+          "id": "realitydetektive-s1-e1",
+          "number": 1,
+          "availableOn": "2026-10-01"
+        },
+        {
+          "id": "realitydetektive-s1-e2",
+          "number": 2,
+          "availableOn": "2026-10-01"
+        },
+        {
+          "id": "realitydetektive-s1-e3",
+          "number": 3,
+          "availableOn": "2026-10-08"
+        },
+        {
+          "id": "realitydetektive-s1-e4",
+          "number": 4,
+          "availableOn": "2026-10-08"
+        },
+        {
+          "id": "realitydetektive-s1-e5",
+          "number": 5,
+          "availableOn": "2026-10-15"
+        },
+        {
+          "id": "realitydetektive-s1-e6",
+          "number": 6,
+          "availableOn": "2026-10-15"
+        },
+        {
+          "id": "realitydetektive-s1-e7",
+          "number": 7,
+          "availableOn": "2026-10-22"
+        },
+        {
+          "id": "realitydetektive-s1-e8",
+          "number": 8,
+          "availableOn": "2026-10-22"
+        },
         {
           "id": "realitydetektive-s1-e9-10",
           "number": 9,
@@ -602,12 +782,12 @@
         {
           "id": "promibuessen-s5-e3-4",
           "number": 3,
-          "availableOn": "2026-11-02"
+          "availableOn": "2026-10-26"
         },
         {
           "id": "promibuessen-s5-e4",
           "number": 4,
-          "availableOn": "2026-11-02"
+          "availableOn": "2026-10-26"
         },
         {
           "id": "promibuessen-s5-e5-6",
@@ -642,6 +822,88 @@
           "id": "germany-shore-s6-e1",
           "number": 1,
           "availableOn": "2026-11-24"
+        }
+      ]
+    },
+    {
+      "name": "The 50",
+      "platform": "Amazon Prime Video",
+      "season": "Staffel 3",
+      "episodes": [
+        {
+          "id": "the50-s3-e1",
+          "number": 1,
+          "availableOn": "2026-03-09"
+        },
+        {
+          "id": "the50-s3-e2",
+          "number": 2,
+          "availableOn": "2026-03-09"
+        },
+        {
+          "id": "the50-s3-e3",
+          "number": 3,
+          "availableOn": "2026-03-09"
+        },
+        {
+          "id": "the50-s3-e4",
+          "number": 4,
+          "availableOn": "2026-03-16"
+        },
+        {
+          "id": "the50-s3-e5",
+          "number": 5,
+          "availableOn": "2026-03-16"
+        },
+        {
+          "id": "the50-s3-e6",
+          "number": 6,
+          "availableOn": "2026-03-16"
+        },
+        {
+          "id": "the50-s3-e7",
+          "number": 7,
+          "availableOn": "2026-03-23"
+        },
+        {
+          "id": "the50-s3-e8",
+          "number": 8,
+          "availableOn": "2026-03-23"
+        },
+        {
+          "id": "the50-s3-e9",
+          "number": 9,
+          "availableOn": "2026-03-23"
+        },
+        {
+          "id": "the50-s3-e10",
+          "number": 10,
+          "availableOn": "2026-03-30"
+        },
+        {
+          "id": "the50-s3-e11",
+          "number": 11,
+          "availableOn": "2026-03-30"
+        },
+        {
+          "id": "the50-s3-e12",
+          "number": 12,
+          "availableOn": "2026-03-30"
+        },
+        {
+          "id": "the50-s3-e13",
+          "number": 13,
+          "availableOn": "2026-04-06"
+        },
+        {
+          "id": "the50-s3-e14",
+          "number": 14,
+          "availableOn": "2026-04-06"
+        },
+        {
+          "id": "the50-s3-e15",
+          "number": 15,
+          "availableOn": "2026-04-06"
         }
       ]
     }
