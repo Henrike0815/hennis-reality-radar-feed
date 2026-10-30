@@ -1,0 +1,18 @@
+
+{
+  "show": "Love Island VIP",
+  "season": "Staffel 3",
+  "platform": "RTL+ Premium",
+  "episodes": [
+    {
+      "id": "love-island-vip-s3-e19",
+      "number": 19,
+      "availableOn": "2026-11-25"
+    },
+    {
+      "id": "love-island-vip-s3-e20",
+      "number": 20,
+      "availableOn": "2026-11-25"
+    }
+  ]
+}
