@@ -1,0 +1,20 @@
+
+name: Reality Radar Update
+
+on:
+  schedule:
+    - cron: '0 7 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Teste Reality Radar
+        run: |
+          echo "Hallo vom Reality Radar!"
+          echo "Die automatische Ausführung funktioniert."
+          echo "Die Folgenliste bleibt unverändert."
