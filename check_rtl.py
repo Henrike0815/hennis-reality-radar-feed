@@ -72,9 +72,10 @@ def main():
 
     show = next(
         (
-            item for item in shows
-        if item.get("name") == SOURCE["name"]
-        and item.get("season") == SOURCE["season"]),
+            item
+            for item in shows
+            if item.get("name") == SOURCE["name"]
+            and item.get("season") == SOURCE["season"]
         ),
         None,
     )
