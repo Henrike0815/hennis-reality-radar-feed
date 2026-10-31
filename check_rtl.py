@@ -169,6 +169,21 @@ def diagnose_inactive_sources(sources):
                     except (ValueError, TypeError):
                         meta_number = None
                     dates = subscription_dates(node)
+                    if len(dates) != 1:
+                        # Read-only exploration: these dates may mean publication,
+                        # upload or public availability, NOT RTL+ subscription start.
+                        candidates = {}
+                        for nested in walk_json(node):
+                            for field in ("datePublished", "dateCreated", "uploadDate",
+                                          "availabilityStarts", "availabilityEnds"):
+                                value = nested.get(field)
+                                if isinstance(value, str) and value.strip():
+                                    candidates.setdefault(field, set()).add(value.strip()[:40])
+                        summary = ", ".join(
+                            f"{field}={sorted(values)}"
+                            for field, values in sorted(candidates.items())
+                        ) or "keine weiteren Datumsfelder"
+                        print(f"DATUMSSUCHE {name}: URL-Folge={url_number}, {summary}")
                     season_node = node.get("partOfSeason")
                     series_node = node.get("partOfSeries")
                     try:
