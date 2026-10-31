@@ -1,5 +1,6 @@
 """Read-only diagnostics of Joyn episode links for all tracked Joyn shows."""
 import json
+import html as html_module
 import re
 import urllib.request
 from html.parser import HTMLParser
@@ -68,6 +69,45 @@ def main():
             if urls:
                 print(f"JOYN BEISPIEL: {name}: Staffel={season_number}, Folge={sample}, "
                       f"Link={urls[0][:240]}")
+        if season_matches:
+            sample = season_matches[-1]
+            episode_links = sorted(h for h in parser.links
+                                   if re.search(rf"/serien/{re.escape(slug)}/{season_number}-{sample}-", h))
+            if episode_links:
+                episode_url = urllib.request.urljoin("https://www.joyn.de", episode_links[0])
+                try:
+                    episode_req = urllib.request.Request(
+                        episode_url, headers={"User-Agent": "Mozilla/5.0"})
+                    with urllib.request.urlopen(episode_req, timeout=20) as response:
+                        episode_html = response.read().decode("utf-8", "replace")
+                    scripts = re.findall(
+                        r'<script[^>]*type=["\\\']application/ld\\+json["\\\'][^>]*>(.*?)</script>',
+                        episode_html, flags=re.I | re.S)
+                    metadata = []
+                    for raw in scripts:
+                        try:
+                            parsed = json.loads(html_module.unescape(raw))
+                            nodes = parsed if isinstance(parsed, list) else [parsed]
+                            for node in nodes:
+                                if isinstance(node, dict):
+                                    metadata.append({
+                                        "type": node.get("@type"),
+                                        "datePublished": node.get("datePublished"),
+                                        "uploadDate": node.get("uploadDate"),
+                                        "availabilityStarts": node.get("availabilityStarts"),
+                                        "episodeNumber": node.get("episodeNumber"),
+                                    })
+                        except (ValueError, TypeError):
+                            continue
+                    keywords = {
+                        key: len(re.findall(key, episode_html, re.I))
+                        for key in ("availabilityStarts", "datePublished", "uploadDate",
+                                    "publicationDate", "Joyn PLUS+", "joynPlus")
+                    }
+                    print(f"JOYN DETAIL: {name}: Staffel={season_number}, Folge={sample}, "
+                          f"JSONLD={metadata[:6]}, Datumsfelder={keywords}")
+                except Exception as exc:
+                    print(f"JOYN DETAILFEHLER: {name}: {type(exc).__name__}: {exc}")
         print(f"JOYN STAFFEL: {name}: Staffel={season_number}, "
               f"Joyn-Folgen={season_matches}, Feed-Folgen={sorted(feed_numbers)}, "
               f"Neue-Nummern-Kandidaten={new_numbers}")
