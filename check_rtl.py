@@ -144,6 +144,14 @@ def main():
 
         try:
             candidate_html = load_page(discovered[number])
+            season_match = re.search(
+                r'"partOfSeason"\s*:\s*\{[^{}]*"seasonNumber"\s*:\s*(\d+)',
+                candidate_html,
+            )
+
+            if not season_match or int(season_match.group(1)) != 3:
+                print("UEBERSPRUNGEN: Staffel 3 nicht bestaetigt")
+                continue
 
             abo_dates = re.findall(
                 r'"category"\s*:\s*"subscription"'
