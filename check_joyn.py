@@ -123,6 +123,51 @@ def main():
                           f"JSONLD={metadata[:6]}, Datumsfelder={keywords}")
                 except Exception as exc:
                     print(f"JOYN DETAILFEHLER: {name}: {type(exc).__name__}: {exc}")
+        # Read a small representative set of episode pages to compare dates.
+        if season_matches:
+            samples = sorted(set([season_matches[0],
+                                  season_matches[len(season_matches) // 2],
+                                  season_matches[-1]]))
+            for episode_number in samples:
+                links = sorted(h for h in parser.links
+                               if re.search(rf"/serien/{re.escape(slug)}/{season_number}-{episode_number}-", h))
+                if not links:
+                    continue
+                try:
+                    detail_url = urllib.request.urljoin("https://www.joyn.de", links[0])
+                    detail_req = urllib.request.Request(
+                        detail_url, headers={"User-Agent": "Mozilla/5.0"})
+                    with urllib.request.urlopen(detail_req, timeout=20) as response:
+                        detail_html = response.read().decode("utf-8", "replace")
+                    jsonld = re.findall(
+                        r'<script\b[^>]*\btype\s*=\s*["\x27]application/ld\+json["\x27][^>]*>(.*?)</script\s*>',
+                        detail_html, flags=re.I | re.S)
+                    found = False
+                    for raw in jsonld:
+                        try:
+                            parsed = json.loads(html_module.unescape(raw))
+                        except (ValueError, TypeError):
+                            continue
+                        nodes = parsed if isinstance(parsed, list) else [parsed]
+                        for node in nodes:
+                            if not isinstance(node, dict) or node.get("@type") != "TVEpisode":
+                                continue
+                            video = node.get("video")
+                            video = video if isinstance(video, dict) else {}
+                            print(f"JOYN DATUMSVERGLEICH: {name}: Staffel={season_number}, "
+                                  f"Folge={episode_number}, "
+                                  f"datePublished={node.get('datePublished')}, "
+                                  f"video.uploadDate={video.get('uploadDate')}, "
+                                  f"availabilityStarts={node.get('availabilityStarts')}")
+                            found = True
+                            break
+                        if found:
+                            break
+                    if not found:
+                        print(f"JOYN DATUMSVERGLEICH: {name}: Folge={episode_number}, keine TVEpisode-Metadaten")
+                except Exception as exc:
+                    print(f"JOYN DATUMSFEHLER: {name}: Folge={episode_number}, "
+                          f"{type(exc).__name__}: {exc}")
         print(f"JOYN STAFFEL: {name}: Staffel={season_number}, "
               f"Joyn-Folgen={season_matches}, Feed-Folgen={sorted(feed_numbers)}, "
               f"Neue-Nummern-Kandidaten={new_numbers}")
