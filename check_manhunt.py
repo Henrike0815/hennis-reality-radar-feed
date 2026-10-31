@@ -1,4 +1,4 @@
-"""Read-only YouTube RSS diagnostics for Manhunt Saigon, Staffel 4."""
+"""Safely add confirmed YouTube main episodes for Manhunt Saigon, Staffel 4."""
 import json
 import re
 import urllib.request
@@ -19,6 +19,7 @@ def main():
     if show is None:
         raise SystemExit("MANHUNT: Sendung nicht im Feed gefunden")
     existing = {int(ep["number"]) for ep in show["episodes"]}
+    all_ids = {ep["id"] for s in shows for ep in s.get("episodes", [])}
     url = "https://www.youtube.com/feeds/videos.xml?channel_id=" + CHANNEL_ID
     req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
     try:
@@ -48,6 +49,7 @@ def main():
             continue
         found.setdefault(number, set()).add((date, video_id, title))
     print(f"MANHUNT DIAGNOSE: RSS-Hauptfolgen={len(found)}, bereits im Feed={sorted(existing)}")
+    added = 0
     for number in sorted(found):
         matches = found[number]
         if len(matches) != 1:
@@ -58,7 +60,22 @@ def main():
         date, video_id, title = next(iter(matches))
         status = "VORHANDEN" if number in existing else "KANDIDAT"
         print(f"MANHUNT {status}: Folge {number}, YouTube-Datum={date}, Video={video_id}, Titel={title!r}")
-    print("MANHUNT: Nur Diagnose; feed.json unveraendert.")
+        if number in existing:
+            continue
+        episode_id = f"manhunt-s4-e{number}"
+        if episode_id in all_ids:
+            print(f"MANHUNT WARNUNG: ID {episode_id} existiert bereits; uebersprungen")
+            continue
+        show["episodes"].append({"id": episode_id, "number": number, "availableOn": date})
+        existing.add(number)
+        all_ids.add(episode_id)
+        added += 1
+    if added:
+        show["episodes"].sort(key=lambda ep: int(ep["number"]))
+        Path("feed.json").write_text(json.dumps(feed, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        print(f"MANHUNT: {added} neue bestaetigte Folgen gespeichert.")
+    else:
+        print("MANHUNT: Keine neuen Folgen; feed.json unveraendert.")
 
 if __name__ == "__main__":
     main()
