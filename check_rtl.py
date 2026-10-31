@@ -138,7 +138,8 @@ def main():
     )
 
     print("Moegliche neue Folgen:", len(candidates))
-
+    
+        new_episodes = []
     for number in candidates:
         print("PRUEFEN: Folge", number)
 
