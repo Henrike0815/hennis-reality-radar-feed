@@ -167,6 +167,7 @@ def main():
             date = datetime.fromisoformat(abo_dates[0]).date()
             episode = create_episode(number, date.isoformat())
             new_episodes.append(episode)
+            
             print(
                 "NEUER FOLGENEINTRAG:",
                 json.dumps(episode, ensure_ascii=False),
