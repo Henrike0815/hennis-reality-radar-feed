@@ -46,16 +46,18 @@ def main():
                 ZoneInfo("Europe/Berlin")).date().isoformat()
         except ValueError:
             continue
-        found.setdefault(number, set()).add((date, video_id))
+        found.setdefault(number, set()).add((date, video_id, title))
     print(f"MANHUNT DIAGNOSE: RSS-Hauptfolgen={len(found)}, bereits im Feed={sorted(existing)}")
     for number in sorted(found):
         matches = found[number]
         if len(matches) != 1:
             print(f"MANHUNT WARNUNG: Folge {number} hat mehrere Videos")
+            for date, video_id, title in sorted(matches):
+                print(f"MANHUNT VERGLEICH: Folge {number}, Datum={date}, Video={video_id}, Titel={title!r}")
             continue
-        date, video_id = next(iter(matches))
+        date, video_id, title = next(iter(matches))
         status = "VORHANDEN" if number in existing else "KANDIDAT"
-        print(f"MANHUNT {status}: Folge {number}, YouTube-Datum={date}, Video={video_id}")
+        print(f"MANHUNT {status}: Folge {number}, YouTube-Datum={date}, Video={video_id}, Titel={title!r}")
     print("MANHUNT: Nur Diagnose; feed.json unveraendert.")
 
 if __name__ == "__main__":
