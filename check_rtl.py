@@ -125,7 +125,11 @@ def main():
         except Exception as error:
             print(f"Folge {number}: Fehler bei der Pruefung: {error}")
 
-    candidates = sorted(set(discovered) - existing)
+        candidates = sorted(
+        number
+        for number in discovered
+        if is_new_episode(number, existing)
+    )
 
     print("Moegliche neue Folgen:", len(candidates))
 
