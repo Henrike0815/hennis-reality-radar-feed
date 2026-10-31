@@ -38,6 +38,8 @@ def load_page(url):
     return html
 
 
+def is_new_episode(number, existing_numbers):
+    return number not in existing_numbers
 def main():
     print("REALITY RADAR - RTL+ FOLGENVERGLEICH")
     print("-----------------------------------")
