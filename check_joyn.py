@@ -51,7 +51,7 @@ def main():
         # Site HTML may also contain JSON-embedded episode URLs.
         for match in pattern.finditer(html.replace("\/", "/")):
             matches.add((int(match.group(1)), int(match.group(2))))
-        season_match = re.search(r"\\d+", str(show.get("season", "")))
+        season_match = re.search(r"[0-9]+", str(show.get("season", "")))
         season_number = int(season_match.group()) if season_match else None
         season_matches = sorted(number for season, number in matches if season == season_number)
         feed_numbers = {int(ep["number"]) for ep in show.get("episodes", [])}
