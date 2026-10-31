@@ -104,6 +104,15 @@ def main():
                         for key in ("availabilityStarts", "datePublished", "uploadDate",
                                     "publicationDate", "Joyn PLUS+", "joynPlus")
                     }
+                    # Show small, bounded snippets only; do not dump entire HTML.
+                    for key in ("datePublished", "uploadDate", "application/ld+json"):
+                        match = re.search(re.escape(key), episode_html, re.I)
+                        if match:
+                            start = max(0, match.start() - 130)
+                            end = min(len(episode_html), match.end() + 220)
+                            excerpt = re.sub(r"\\s+", " ", episode_html[start:end])
+                            print(f"JOYN DATUMSKONTEXT: {name}: Feld={key}, "
+                                  f"Ausschnitt={excerpt[:380]!r}")
                     print(f"JOYN DETAIL: {name}: Staffel={season_number}, Folge={sample}, "
                           f"JSONLD={metadata[:6]}, Datumsfelder={keywords}")
                 except Exception as exc:
