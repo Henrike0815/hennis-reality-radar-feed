@@ -74,7 +74,9 @@ jobs:
 
       - name: Love Island VIP Folgen vergleichen
         run: python3 check_love_island.py
-      - name: RTL Plus Webseite testen
+      - name: RTL Plus Webseite testen und weitere Quellen diagnostizieren
+        env:
+          RTL_DIAGNOSTICS: '1'
         run: python3 check_rtl.py
       - name: Validate and commit updated feed
         run: |
