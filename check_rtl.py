@@ -131,7 +131,7 @@ def diagnose_inactive_sources(sources):
             show_videos = [link for link in rtl_links
                            if urlparse(link).path.startswith(base_path)]
             episode_links = [link for link in show_videos
-                             if re.search(r"/folge-(\\d+)-\\d{4}-c_", urlparse(link).path, re.I)]
+                             if re.search(r"/folge-(\\d+)-c_", urlparse(link).path, re.I)]
             ld_types = sorted({str(t) for doc in page.json_ld
                                for node in walk_json(doc)
                                for t in types_of(node)})
@@ -193,7 +193,7 @@ def main():
             parsed = urlparse(link)
             if parsed.scheme != "https" or parsed.hostname != "plus.rtl.de" or not parsed.path.startswith(base_path):
                 continue
-            match = re.search(r"/folge-(\d+)-\d{4}-c_", parsed.path, flags=re.IGNORECASE)
+            match = re.search(r"/folge-(\d+)-c_", parsed.path, flags=re.IGNORECASE)
             if match:
                 number = int(match.group(1))
                 discovered.setdefault(number, set()).add(link)
