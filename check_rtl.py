@@ -178,7 +178,28 @@ def main():
 
     if not candidates:
         print("Keine unbekannten Folgennummern gefunden.")
+        
+    if new_episodes:
+        existing_ids = {
+            episode["id"]
+            for episode in show["episodes"]
+        }
 
+        for episode in new_episodes:
+            if (
+                episode["id"] in existing_ids
+                or episode["number"] in existing
+            ):
+                raise ValueError(
+                    "Doppelte Folge erkannt: " + episode["id"]
+                )
+
+        print(
+            "SPEICHERN VORBEREITET:",
+            len(new_episodes),
+            "neue Folgen"
+        )
+        
     print("-----------------------------------")
     print("FOLGENSEITE - TEST")
 
