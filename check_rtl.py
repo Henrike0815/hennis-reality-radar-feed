@@ -149,7 +149,10 @@ def diagnose_inactive_sources(sources):
                 try:
                     detail_page = PageParser(episode_url)
                     detail_page.feed(load_page(episode_url))
-                    url_match = re.search(r"/folge-(\\d+)-c_", urlparse(episode_url).path, re.I)
+                    url_match = re.search(r"/folge-(\d+)-c_", urlparse(episode_url).path, re.I)
+                    if url_match is None:
+                        print(f"ABGLEICH {name}: Unbekanntes URL-Format uebersprungen")
+                        continue
                     url_number = int(url_match.group(1))
                     nodes = [node for doc in detail_page.json_ld
                              for node in walk_json(doc)
