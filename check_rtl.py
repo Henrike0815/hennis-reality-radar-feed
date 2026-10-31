@@ -199,6 +199,14 @@ def main():
             len(new_episodes),
             "neue Folgen"
         )
+    if new_episodes:
+        show["episodes"].extend(new_episodes)
+
+        with open("feed.json", "w", encoding="utf-8") as file:
+            json.dump(feed, file, ensure_ascii=False, indent=2)
+            file.write("\n")
+
+        print("FEED AKTUALISIERT:", len(new_episodes), "neue Folgen")   
         
     print("-----------------------------------")
     print("FOLGENSEITE - TEST")
