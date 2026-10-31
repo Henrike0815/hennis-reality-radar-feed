@@ -74,6 +74,8 @@ jobs:
 
       - name: Love Island VIP Folgen vergleichen
         run: python3 check_love_island.py
+      - name: RTL Plus Webseite testen
+        run: python3 check_rtl.py
       - name: Validate and commit updated feed
         run: |
           python3 -m json.tool feed.json > /dev/null
@@ -92,5 +94,3 @@ jobs:
           git commit -m "Reality Radar: neue Folgen automatisch aktualisiert"
           git push
 
-      - name: RTL Plus Webseite testen
-        run: python3 check_rtl.py
