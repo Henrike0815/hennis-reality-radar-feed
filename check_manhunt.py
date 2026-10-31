@@ -33,7 +33,7 @@ def main():
         # Only numbered main episodes explicitly tagged Saigon, never BTS/reactions.
         if not re.search(r"MANHUNT\s*Saigon", title, re.I):
             continue
-        match = re.search(r"\bFolge\s*0*(\d+)\b", title, re.I)
+        match = re.match(r"^Folge\s*0*(\d+)\b\s*\|\s*MANHUNT\s+Saigon\b", title, re.I)
         if not match:
             continue
         number = int(match.group(1))
