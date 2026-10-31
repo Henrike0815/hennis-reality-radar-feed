@@ -1,6 +1,7 @@
 """Reality Radar: discover and safely append verified RTL+ episodes."""
 
 import json
+import os
 import re
 import urllib.request
 from datetime import datetime
@@ -107,12 +108,42 @@ def verify_episode(html, expected_number, expected_season, accepted_names):
     return next(iter(matches))
 
 
+
+def diagnose_inactive_sources(sources):
+    """Inspect candidate RTL+ pages without modifying feed.json."""
+    print("RTL+ DIAGNOSE (nur lesen, keine Aktivierung)")
+    for source in sources:
+        if source.get("source") != "rtl_plus" or source.get("enabled"):
+            continue
+        name = source.get("name", "?")
+        url = source.get("url", "")
+        parsed = urlparse(url)
+        if parsed.scheme != "https" or parsed.hostname != "plus.rtl.de":
+            print(f"DIAGNOSE {name}: ungueltige RTL+-Adresse")
+            continue
+        try:
+            page = PageParser(url)
+            page.feed(load_page(url))
+            base_path = parsed.path.rstrip("/") + "/video/"
+            matching = [link for link in page.links
+                        if urlparse(link).hostname == "plus.rtl.de"
+                        and urlparse(link).path.startswith(base_path)
+                        and re.search(r"/folge-(\\d+)-\\d{4}-c_", urlparse(link).path, re.I)]
+            print(f"DIAGNOSE {name}: Seite erreichbar; {len(matching)} passende Folgenlinks")
+            if not matching:
+                print(f"HINWEIS {name}: Noch keine belastbare automatische Erkennung")
+        except Exception as error:
+            print(f"DIAGNOSE {name}: Seitenpruefung fehlgeschlagen: {error}")
+
+
 def main():
     with SOURCES_PATH.open(encoding="utf-8") as file:
         sources = json.load(file)["shows"]
     with FEED_PATH.open(encoding="utf-8") as file:
         feed = json.load(file)
     shows = feed if isinstance(feed, list) else feed["shows"]
+    if os.environ.get("RTL_DIAGNOSTICS") == "1":
+        diagnose_inactive_sources(sources)
     total_new = 0
 
     for source in sources:
