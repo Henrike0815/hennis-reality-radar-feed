@@ -36,8 +36,14 @@ def load_page(url):
         print("HTTP-Status:", response.status)
 
     return html
+    
 
-
+def create_episode(number, date):
+    return {
+        "id": f"love-island-vip-s3-e{number}",
+        "number": number,
+        "availableOn": date,
+    }
 def is_new_episode(number, existing_numbers):
     return number not in existing_numbers
 def main():
