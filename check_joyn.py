@@ -56,6 +56,18 @@ def main():
         season_matches = sorted(number for season, number in matches if season == season_number)
         feed_numbers = {int(ep["number"]) for ep in show.get("episodes", [])}
         new_numbers = [number for number in season_matches if number not in feed_numbers]
+        # Compare existing planned dates with what the landing page actually exposes.
+        missing = sorted(feed_numbers - set(season_matches))
+        print(f"JOYN ABDECKUNG: {name}: Auf-Seite={len(season_matches)}, "
+              f"Nur-im-Feed={missing}, "
+              f"Hinweis=Folgenlinks-belegen-keine-JoynPlus-Verfuegbarkeit")
+        if season_matches:
+            sample = season_matches[-1]
+            urls = sorted(h for h in parser.links
+                          if re.search(rf"/serien/{re.escape(slug)}/{season_number}-{sample}-", h))
+            if urls:
+                print(f"JOYN BEISPIEL: {name}: Staffel={season_number}, Folge={sample}, "
+                      f"Link={urls[0][:240]}")
         print(f"JOYN STAFFEL: {name}: Staffel={season_number}, "
               f"Joyn-Folgen={season_matches}, Feed-Folgen={sorted(feed_numbers)}, "
               f"Neue-Nummern-Kandidaten={new_numbers}")
