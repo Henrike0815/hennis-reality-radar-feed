@@ -75,7 +75,7 @@ def subscription_dates(episode_node):
     return dates
 
 
-def verify_episode(html, expected_number, expected_season, expected_name):
+def verify_episode(html, expected_number, expected_season, accepted_names):
     parser = PageParser("https://plus.rtl.de/")
     parser.feed(html)
     matches = set()
@@ -99,7 +99,7 @@ def verify_episode(html, expected_number, expected_season, expected_name):
             if episode_number != expected_number:
                 continue
             series = node.get("partOfSeries")
-            if not isinstance(series, dict) or series.get("name", "").strip().casefold() != expected_name.strip().casefold():
+            if not isinstance(series, dict) or series.get("name", "").strip().casefold() not in accepted_names:
                 continue
             matches.update(subscription_dates(node))
     if len(matches) != 1:
@@ -121,10 +121,14 @@ def main():
         name = source["name"]
         season_label = source["season"]
         season_match = re.fullmatch(r"Staffel\s+(\d+)", season_label)
-        if not season_match:
-            print(f"UEBERSPRUNGEN: Ungueltige Staffelbezeichnung fuer {name}")
+        season_number = source.get("rtl_season_number")
+        if season_number is None and season_match:
+            season_number = int(season_match.group(1))
+        if type(season_number) is not int or season_number < 1:
+            print(f"UEBERSPRUNGEN: RTL-Staffelnummer fehlt fuer {name}")
             continue
-        season_number = int(season_match.group(1))
+        accepted_names = {name.strip().casefold()}
+        accepted_names.update(alias.strip().casefold() for alias in source.get("rtl_names", []) if isinstance(alias, str) and alias.strip())
         url = source["url"]
         parsed_url = urlparse(url)
         if parsed_url.scheme != "https" or parsed_url.hostname != "plus.rtl.de":
@@ -161,7 +165,7 @@ def main():
                 print(f"UEBERSPRUNGEN: Folge {number} hat mehrere Links")
                 continue
             try:
-                date = verify_episode(load_page(next(iter(links))), number, season_number, name)
+                date = verify_episode(load_page(next(iter(links))), number, season_number, accepted_names)
                 # The ID prefix is a legacy format. Existing IDs are never changed.
                 prefix = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
                 episode_id = f"{prefix}-s{season_number}-e{number}"
