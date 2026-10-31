@@ -895,6 +895,16 @@
           "id": "eating-ex-vip-s1-e1",
           "number": 1,
           "availableOn": "2026-11-03"
+        },
+        {
+          "id": "eating-ex-vip-s1-e2",
+          "number": 2,
+          "availableOn": "2026-11-10"
+        },
+        {
+          "id": "eating-ex-vip-s1-e3",
+          "number": 3,
+          "availableOn": "2026-11-17"
         }
       ]
     },
@@ -907,6 +917,61 @@
           "id": "germany-shore-s6-e1",
           "number": 1,
           "availableOn": "2026-11-24"
+        },
+        {
+          "id": "germany-shore-s6-e2",
+          "number": 2,
+          "availableOn": "2026-12-01"
+        },
+        {
+          "id": "germany-shore-s6-e3",
+          "number": 3,
+          "availableOn": "2026-12-08"
+        },
+        {
+          "id": "germany-shore-s6-e4",
+          "number": 4,
+          "availableOn": "2026-12-15"
+        },
+        {
+          "id": "germany-shore-s6-e5",
+          "number": 5,
+          "availableOn": "2026-12-22"
+        },
+        {
+          "id": "germany-shore-s6-e6",
+          "number": 6,
+          "availableOn": "2026-12-29"
+        },
+        {
+          "id": "germany-shore-s6-e7",
+          "number": 7,
+          "availableOn": "2027-01-05"
+        },
+        {
+          "id": "germany-shore-s6-e8",
+          "number": 8,
+          "availableOn": "2027-01-12"
+        },
+        {
+          "id": "germany-shore-s6-e9",
+          "number": 9,
+          "availableOn": "2027-01-19"
+        },
+        {
+          "id": "germany-shore-s6-e10",
+          "number": 10,
+          "availableOn": "2027-01-26"
+        },
+        {
+          "id": "germany-shore-s6-e11",
+          "number": 11,
+          "availableOn": "2027-02-02"
+        },
+        {
+          "id": "germany-shore-s6-e12",
+          "number": 12,
+          "availableOn": "2027-02-09"
         }
       ]
     },
