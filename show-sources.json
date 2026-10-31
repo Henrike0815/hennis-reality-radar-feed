@@ -21,7 +21,7 @@
       "platform": "RTL+ Premium",
       "season": "Staffel 11",
       "source": "rtl_plus",
-      "enabled": false,
+      "enabled": true,
       "url": "https://plus.rtl.de/das-sommerhaus-der-stars-kampf-der-promipaare-p_6405",
       "rtl_names": [
         "Das Sommerhaus der Stars - Kampf der Promipaare"
@@ -32,7 +32,7 @@
       "platform": "RTL+ Premium",
       "season": "Staffel 6",
       "source": "rtl_plus",
-      "enabled": false,
+      "enabled": true,
       "url": "https://plus.rtl.de/are-you-the-one-reality-stars-in-love-p_6838",
       "rtl_names": [
         "Are You The One - Realitystars in Love"
