@@ -145,6 +145,8 @@ def diagnose_inactive_sources(sources):
             matching = 0
             differing = 0
             no_date = 0
+            wrong_season = 0
+            wrong_series = 0
             for episode_url in sorted(set(episode_links))[:5]:
                 try:
                     detail_page = PageParser(episode_url)
@@ -167,6 +169,22 @@ def diagnose_inactive_sources(sources):
                     except (ValueError, TypeError):
                         meta_number = None
                     dates = subscription_dates(node)
+                    season_node = node.get("partOfSeason")
+                    series_node = node.get("partOfSeries")
+                    try:
+                        actual_season = int(season_node.get("seasonNumber")) if isinstance(season_node, dict) else None
+                    except (ValueError, TypeError):
+                        actual_season = None
+                    expected_season_match = re.search(r"Staffel (\\d+)", source.get("season", ""), re.I)
+                    expected_season = int(expected_season_match.group(1)) if expected_season_match else None
+                    if expected_season is None or actual_season != expected_season:
+                        wrong_season += 1
+                        print(f"STAFFELWARNUNG {name}: Erwartet={expected_season}, Gefunden={actual_season}")
+                    actual_series = series_node.get("name", "") if isinstance(series_node, dict) else ""
+                    accepted = [name] + source.get("rtl_names", [])
+                    if actual_series.strip().casefold() not in {n.strip().casefold() for n in accepted}:
+                        wrong_series += 1
+                        print(f"SERIENWARNUNG {name}: RTL-Name={actual_series!r}")
                     if meta_number == url_number:
                         matching += 1
                     else:
@@ -177,7 +195,8 @@ def diagnose_inactive_sources(sources):
                 except Exception as error:
                     print(f"ABGLEICH {name}: Seitenpruefung fehlgeschlagen: {error}")
             print(f"ABGLEICH {name}: geprueft={checked}, Nummer-gleich={matching}, "
-                  f"Nummer-abweichend={differing}, Abo-Datum-nicht-eindeutig={no_date}")
+                  f"Nummer-abweichend={differing}, Abo-Datum-nicht-eindeutig={no_date}, "
+                  f"Staffelwarnungen={wrong_season}, Serienwarnungen={wrong_series}")
             # Inspect at most one unique episode per inactive show. No feed writes.
             unique_episodes = sorted(set(episode_links))
             if unique_episodes:
