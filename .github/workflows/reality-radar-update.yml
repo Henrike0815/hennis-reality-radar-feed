@@ -84,6 +84,8 @@ jobs:
         run: python3 check_joyn.py
       - name: Paramount Plus Sendetermine prüfen
         run: python3 check_paramount.py
+      - name: Prime Video The 50 Folgen prüfen
+        run: python3 check_prime.py
       - name: Validate and commit updated feed
         run: |
           python3 -m json.tool feed.json > /dev/null
