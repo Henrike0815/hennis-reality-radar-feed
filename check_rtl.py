@@ -140,7 +140,30 @@ def diagnose_inactive_sources(sources):
                   f"Folgenmuster={len(episode_links)}, JSON-LD-Typen={','.join(ld_types[:8]) or 'keine'}")
             for link in show_videos[:2]:
                 print(f"BEISPIEL {name}: {urlparse(link).path[:180]}")
-            if not episode_links:
+            # Inspect at most one unique episode per inactive show. No feed writes.
+            unique_episodes = sorted(set(episode_links))
+            if unique_episodes:
+                try:
+                    detail = PageParser(unique_episodes[0])
+                    detail.feed(load_page(unique_episodes[0]))
+                    episodes = [node for document in detail.json_ld
+                                for node in walk_json(document)
+                                if "TVEpisode" in types_of(node)]
+                    print(f"DETAIL {name}: TVEpisode-Eintraege={len(episodes)}")
+                    for node in episodes[:2]:
+                        season = node.get("partOfSeason")
+                        series = node.get("partOfSeries")
+                        season_num = season.get("seasonNumber") if isinstance(season, dict) else None
+                        series_name = series.get("name") if isinstance(series, dict) else None
+                        dates = sorted(subscription_dates(node))
+                        print(f"METADATEN {name}: Staffel={season_num!r}, "
+                              f"Serie={series_name!r}, Folge={node.get('episodeNumber')!r}, "
+                              f"Abo-Termine={dates}")
+                    if not episodes:
+                        print(f"HINWEIS {name}: Folgenseite ohne TVEpisode-Metadaten")
+                except Exception as error:
+                    print(f"DETAIL {name}: Abruf fehlgeschlagen: {error}")
+            else:
                 print(f"HINWEIS {name}: Noch keine belastbare automatische Erkennung")
         except Exception as error:
             print(f"DIAGNOSE {name}: Seitenpruefung fehlgeschlagen: {error}")
