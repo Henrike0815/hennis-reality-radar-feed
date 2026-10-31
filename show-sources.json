@@ -7,6 +7,90 @@
       "source": "rtl_plus",
       "url": "https://plus.rtl.de/love-island-vip-p_3030",
       "enabled": true
+    },
+    {
+      "name": "Temptation Island VIP",
+      "platform": "RTL+ Premium",
+      "season": "Staffel 7",
+      "source": "pending_integration",
+      "enabled": false
+    },
+    {
+      "name": "Das Sommerhaus der Stars – Kampf der Promipaare",
+      "platform": "RTL+ Premium",
+      "season": "Staffel 11",
+      "source": "pending_integration",
+      "enabled": false
+    },
+    {
+      "name": "Are You The One? – Realitystars in Love",
+      "platform": "RTL+ Premium",
+      "season": "Staffel 6",
+      "source": "pending_integration",
+      "enabled": false
+    },
+    {
+      "name": "#CoupleChallenge – Halloween Edition",
+      "platform": "RTL+ Premium",
+      "season": "Halloween Edition",
+      "source": "pending_integration",
+      "enabled": false
+    },
+    {
+      "name": "Manhunt Saigon",
+      "platform": "YouTube",
+      "season": "Staffel 4",
+      "source": "pending_integration",
+      "enabled": false
+    },
+    {
+      "name": "Club der Reality Detektive",
+      "platform": "Joyn+",
+      "season": "Staffel 1",
+      "source": "pending_integration",
+      "enabled": false
+    },
+    {
+      "name": "The Power",
+      "platform": "Joyn+",
+      "season": "Staffel 2",
+      "source": "pending_integration",
+      "enabled": false
+    },
+    {
+      "name": "Forsthaus Rampensau Germany",
+      "platform": "Joyn+",
+      "season": "Staffel 4",
+      "source": "pending_integration",
+      "enabled": false
+    },
+    {
+      "name": "Das große Promi-Büßen",
+      "platform": "Joyn+",
+      "season": "Staffel 5",
+      "source": "pending_integration",
+      "enabled": false
+    },
+    {
+      "name": "Eating with My Ex VIP",
+      "platform": "Paramount+",
+      "season": "Staffel 1",
+      "source": "pending_integration",
+      "enabled": false
+    },
+    {
+      "name": "Germany Shore",
+      "platform": "Paramount+",
+      "season": "Staffel 6",
+      "source": "pending_integration",
+      "enabled": false
+    },
+    {
+      "name": "The 50",
+      "platform": "Amazon Prime Video",
+      "season": "Staffel 3",
+      "source": "pending_integration",
+      "enabled": false
     }
   ]
 }
