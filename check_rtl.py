@@ -131,7 +131,7 @@ def diagnose_inactive_sources(sources):
             show_videos = [link for link in rtl_links
                            if urlparse(link).path.startswith(base_path)]
             episode_links = [link for link in show_videos
-                             if re.search(r"/folge-(\\d+)-c_", urlparse(link).path, re.I)]
+                             if re.search(r"/folge-(\d+)-c_", urlparse(link).path, re.I)]
             ld_types = sorted({str(t) for doc in page.json_ld
                                for node in walk_json(doc)
                                for t in types_of(node)})
