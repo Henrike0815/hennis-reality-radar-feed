@@ -175,7 +175,7 @@ def diagnose_inactive_sources(sources):
                         actual_season = int(season_node.get("seasonNumber")) if isinstance(season_node, dict) else None
                     except (ValueError, TypeError):
                         actual_season = None
-                    expected_season_match = re.search(r"Staffel (\\d+)", source.get("season", ""), re.I)
+                    expected_season_match = re.fullmatch(r"Staffel\s+(\d+)", source.get("season", ""), re.I)
                     expected_season = int(expected_season_match.group(1)) if expected_season_match else None
                     if expected_season is None or actual_season != expected_season:
                         wrong_season += 1
