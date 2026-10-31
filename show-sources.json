@@ -12,29 +12,33 @@
       "name": "Temptation Island VIP",
       "platform": "RTL+ Premium",
       "season": "Staffel 7",
-      "source": "pending_integration",
-      "enabled": false
+      "source": "rtl_plus",
+      "enabled": false,
+      "url": "https://plus.rtl.de/temptation-island-vip-p_4267"
     },
     {
       "name": "Das Sommerhaus der Stars – Kampf der Promipaare",
       "platform": "RTL+ Premium",
       "season": "Staffel 11",
-      "source": "pending_integration",
-      "enabled": false
+      "source": "rtl_plus",
+      "enabled": false,
+      "url": "https://plus.rtl.de/das-sommerhaus-der-stars-kampf-der-promipaare-p_6405"
     },
     {
       "name": "Are You The One? – Realitystars in Love",
       "platform": "RTL+ Premium",
       "season": "Staffel 6",
-      "source": "pending_integration",
-      "enabled": false
+      "source": "rtl_plus",
+      "enabled": false,
+      "url": "https://plus.rtl.de/are-you-the-one-reality-stars-in-love-p_6838"
     },
     {
       "name": "#CoupleChallenge – Halloween Edition",
       "platform": "RTL+ Premium",
       "season": "Halloween Edition",
-      "source": "pending_integration",
-      "enabled": false
+      "source": "rtl_plus",
+      "enabled": false,
+      "url": "https://plus.rtl.de/couplechallenge-das-starkste-team-gewinnt-p_11271"
     },
     {
       "name": "Manhunt Saigon",
