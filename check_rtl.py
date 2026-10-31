@@ -186,6 +186,15 @@ def main():
     )
 
     episode_html = load_page(episode_url)
+    season_test = re.search(
+        r'"partOfSeason"\s*:\s*\{[^{}]*"seasonNumber"\s*:\s*(\d+)',
+        episode_html,
+    )
+
+    if season_test:
+        print("STAFFEL ERKANNT:", season_test.group(1))
+    else:
+        print("STAFFEL NICHT ERKANNT")
 
     print("HTML-Laenge:", len(episode_html))
     print("2026-10-28:", "2026-10-28" in episode_html)
