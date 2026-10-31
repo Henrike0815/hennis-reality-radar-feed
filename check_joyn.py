@@ -42,14 +42,14 @@ def main():
             continue
         parser = Links()
         parser.feed(html)
-        pattern = re.compile(rf"(?:https?://www\\.joyn\\.de)?/serien/{re.escape(slug)}/(\\d+)-(\\d+)-", re.I)
+        pattern = re.compile(rf"(?:https?://www\.joyn\.de)?/serien/{re.escape(slug)}/(\d+)-(\d+)-", re.I)
         matches = set()
         for href in parser.links:
             match = pattern.search(href)
             if match:
                 matches.add((int(match.group(1)), int(match.group(2))))
         # Site HTML may also contain JSON-embedded episode URLs.
-        for match in pattern.finditer(html.replace("\\/", "/")):
+        for match in pattern.finditer(html.replace("\/", "/")):
             matches.add((int(match.group(1)), int(match.group(2))))
         print(f"JOYN DIAGNOSE: {name}: URL={final_url}, HTML-Zeichen={len(html)}, "
               f"Staffel/Folge-Kandidaten={sorted(matches)[:35]}, "
