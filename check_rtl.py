@@ -184,6 +184,15 @@ def diagnose_inactive_sources(sources):
                             for field, values in sorted(candidates.items())
                         ) or "keine weiteren Datumsfelder"
                         print(f"DATUMSSUCHE {name}: URL-Folge={url_number}, {summary}")
+                        for action in node.get("potentialAction", []) if isinstance(node.get("potentialAction"), list) else [node.get("potentialAction", {})]:
+                            if not isinstance(action, dict):
+                                continue
+                            print(f"DATUMSKONTEXT {name}: URL-Folge={url_number}, "
+                                  f"Aktion={action.get('@type')!r}, "
+                                  f"Kategorie={action.get('category')!r}, "
+                                  f"Start={action.get('availabilityStarts')!r}")
+                        print(f"DATUMSFELDER {name}: URL-Folge={url_number}, "
+                              f"TVEpisode-Felder={sorted(node.keys())}")
                     season_node = node.get("partOfSeason")
                     series_node = node.get("partOfSeries")
                     try:
