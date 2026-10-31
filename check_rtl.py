@@ -124,13 +124,23 @@ def diagnose_inactive_sources(sources):
         try:
             page = PageParser(url)
             page.feed(load_page(url))
+            rtl_links = [link for link in page.links
+                         if urlparse(link).scheme == "https"
+                         and urlparse(link).hostname == "plus.rtl.de"]
             base_path = parsed.path.rstrip("/") + "/video/"
-            matching = [link for link in page.links
-                        if urlparse(link).hostname == "plus.rtl.de"
-                        and urlparse(link).path.startswith(base_path)
-                        and re.search(r"/folge-(\\d+)-\\d{4}-c_", urlparse(link).path, re.I)]
-            print(f"DIAGNOSE {name}: Seite erreichbar; {len(matching)} passende Folgenlinks")
-            if not matching:
+            show_videos = [link for link in rtl_links
+                           if urlparse(link).path.startswith(base_path)]
+            episode_links = [link for link in show_videos
+                             if re.search(r"/folge-(\\d+)-\\d{4}-c_", urlparse(link).path, re.I)]
+            ld_types = sorted({str(t) for doc in page.json_ld
+                               for node in walk_json(doc)
+                               for t in types_of(node)})
+            print(f"DIAGNOSE {name}: RTL-Links={len(rtl_links)}, "
+                  f"Sendungsvideos={len(show_videos)}, "
+                  f"Folgenmuster={len(episode_links)}, JSON-LD-Typen={','.join(ld_types[:8]) or 'keine'}")
+            for link in show_videos[:2]:
+                print(f"BEISPIEL {name}: {urlparse(link).path[:180]}")
+            if not episode_links:
                 print(f"HINWEIS {name}: Noch keine belastbare automatische Erkennung")
         except Exception as error:
             print(f"DIAGNOSE {name}: Seitenpruefung fehlgeschlagen: {error}")
