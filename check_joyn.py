@@ -51,8 +51,16 @@ def main():
         # Site HTML may also contain JSON-embedded episode URLs.
         for match in pattern.finditer(html.replace("\/", "/")):
             matches.add((int(match.group(1)), int(match.group(2))))
+        season_match = re.search(r"\\d+", str(show.get("season", "")))
+        season_number = int(season_match.group()) if season_match else None
+        season_matches = sorted(number for season, number in matches if season == season_number)
+        feed_numbers = {int(ep["number"]) for ep in show.get("episodes", [])}
+        new_numbers = [number for number in season_matches if number not in feed_numbers]
+        print(f"JOYN STAFFEL: {name}: Staffel={season_number}, "
+              f"Joyn-Folgen={season_matches}, Feed-Folgen={sorted(feed_numbers)}, "
+              f"Neue-Nummern-Kandidaten={new_numbers}")
         print(f"JOYN DIAGNOSE: {name}: URL={final_url}, HTML-Zeichen={len(html)}, "
-              f"Staffel/Folge-Kandidaten={sorted(matches)[:35]}, "
+              f"Staffel/Folge-Kandidaten={len(matches)}, "
               f"Feed-Folgen={len(show.get('episodes', []))}")
     print("JOYN: Nur Diagnose; feed.json unveraendert.")
 
