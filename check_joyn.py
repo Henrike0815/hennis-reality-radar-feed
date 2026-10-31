@@ -81,7 +81,7 @@ def main():
                     with urllib.request.urlopen(episode_req, timeout=20) as response:
                         episode_html = response.read().decode("utf-8", "replace")
                     scripts = re.findall(
-                        r'<script[^>]*type=["\\\']application/ld\\+json["\\\'][^>]*>(.*?)</script>',
+                        r'<script\b[^>]*\btype\s*=\s*["\x27]application/ld\+json["\x27][^>]*>(.*?)</script\s*>',
                         episode_html, flags=re.I | re.S)
                     metadata = []
                     for raw in scripts:
@@ -99,6 +99,12 @@ def main():
                                     })
                         except (ValueError, TypeError):
                             continue
+                    for node in metadata:
+                        if node.get("type") == "TVEpisode":
+                            print(f"JOYN METADATEN: {name}: Staffel={season_number}, "
+                                  f"Folge={sample}, datePublished={node.get('datePublished')}, "
+                                  f"uploadDate={node.get('uploadDate')}, "
+                                  f"availabilityStarts={node.get('availabilityStarts')}")
                     keywords = {
                         key: len(re.findall(key, episode_html, re.I))
                         for key in ("availabilityStarts", "datePublished", "uploadDate",
