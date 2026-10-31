@@ -141,7 +141,30 @@ def main():
 
     for number in candidates:
         print("PRUEFEN: Folge", number)
-        print("LINK:", discovered[number])
+
+        try:
+            candidate_html = load_page(discovered[number])
+
+            abo_dates = re.findall(
+                r'"category"\s*:\s*"subscription"'
+                r'.{0,500}?"availabilityStarts"\s*:\s*"([^"]+)"',
+                candidate_html,
+            )
+
+            if len(set(abo_dates)) != 1:
+                print("UEBERSPRUNGEN: Kein eindeutiger Abo-Start")
+                continue
+
+            date = datetime.fromisoformat(abo_dates[0]).date()
+            episode = create_episode(number, date.isoformat())
+
+            print(
+                "NEUER FOLGENEINTRAG:",
+                json.dumps(episode, ensure_ascii=False),
+            )
+
+        except Exception as error:
+            print("UEBERSPRUNGEN:", error)
 
     if not candidates:
         print("Keine unbekannten Folgennummern gefunden.")
