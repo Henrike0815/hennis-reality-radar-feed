@@ -176,7 +176,9 @@ def diagnose_inactive_sources(sources):
                     except (ValueError, TypeError):
                         actual_season = None
                     expected_season_match = re.fullmatch(r"Staffel\s+(\d+)", source.get("season", ""), re.I)
-                    expected_season = int(expected_season_match.group(1)) if expected_season_match else None
+                    expected_season = source.get("rtl_season_number")
+                    if expected_season is None and expected_season_match:
+                        expected_season = int(expected_season_match.group(1))
                     if expected_season is None or actual_season != expected_season:
                         wrong_season += 1
                         print(f"STAFFELWARNUNG {name}: Erwartet={expected_season}, Gefunden={actual_season}")
