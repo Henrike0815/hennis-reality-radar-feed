@@ -1,0 +1,12 @@
+{
+  "shows": [
+    {
+      "name": "Love Island VIP",
+      "platform": "RTL+ Premium",
+      "season": "Staffel 3",
+      "source": "rtl_plus",
+      "url": "https://plus.rtl.de/love-island-vip-p_3030",
+      "enabled": true
+    }
+  ]
+}
