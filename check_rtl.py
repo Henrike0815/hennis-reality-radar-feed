@@ -194,4 +194,6 @@ def main():
 
 
 if __name__ == "__main__":
+    test_episode = create_episode(21, "2026-12-02")
+    print("TEST-EINTRAG:", json.dumps(test_episode, ensure_ascii=False))
     main()
