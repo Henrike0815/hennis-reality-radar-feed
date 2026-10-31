@@ -1,284 +1,188 @@
+"""Reality Radar: discover and safely append verified RTL+ episodes."""
 
 import json
-from datetime import datetime
 import re
 import urllib.request
+from datetime import datetime
 from html.parser import HTMLParser
+from pathlib import Path
 from urllib.parse import urljoin, urlparse
 
-with open("show-sources.json", encoding="utf-8") as file:
-    sources = json.load(file)["shows"]
-
-rtl_sources = [
-    item for item in sources
-    if item.get("source") == "rtl_plus"
-    and item.get("enabled", False)
-]
-
-if len(rtl_sources) != 1:
-    raise ValueError(
-        "Aktuell muss genau eine RTL+-Sendung aktiviert sein."
-    )
-
-SOURCE = rtl_sources[0]
-URL = SOURCE["url"]
+FEED_PATH = Path("feed.json")
+SOURCES_PATH = Path("show-sources.json")
 
 
-class LinkFinder(HTMLParser):
-    def __init__(self):
+class PageParser(HTMLParser):
+    def __init__(self, base_url):
         super().__init__()
+        self.base_url = base_url
         self.links = []
+        self.json_ld = []
+        self._json_ld_parts = None
 
     def handle_starttag(self, tag, attrs):
-        if tag == "a":
-            href = dict(attrs).get("href")
-            if href:
-                self.links.append(urljoin(URL, href))
+        attrs = dict(attrs)
+        if tag == "a" and attrs.get("href"):
+            self.links.append(urljoin(self.base_url, attrs["href"]))
+        if tag == "script" and "ld+json" in attrs.get("type", "").lower():
+            self._json_ld_parts = []
+
+    def handle_data(self, data):
+        if self._json_ld_parts is not None:
+            self._json_ld_parts.append(data)
+
+    def handle_endtag(self, tag):
+        if tag == "script" and self._json_ld_parts is not None:
+            try:
+                self.json_ld.append(json.loads("".join(self._json_ld_parts)))
+            except json.JSONDecodeError:
+                pass
+            self._json_ld_parts = None
 
 
 def load_page(url):
-    request = urllib.request.Request(
-        url,
-        headers={"User-Agent": "Mozilla/5.0"},
-    )
+    request = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+    with urllib.request.urlopen(request, timeout=20) as response:
+        return response.read().decode("utf-8", errors="replace")
 
-    with urllib.request.urlopen(
-        request, timeout=20
-    ) as response:
-        html = response.read().decode(
-            "utf-8", errors="replace"
-        )
-        print("HTTP-Status:", response.status)
 
-    return html
-    
+def walk_json(value):
+    if isinstance(value, dict):
+        yield value
+        for child in value.values():
+            yield from walk_json(child)
+    elif isinstance(value, list):
+        for child in value:
+            yield from walk_json(child)
 
-def create_episode(number, date):
-    return {
-        "id": f"love-island-vip-s3-e{number}",
-        "number": number,
-        "availableOn": date,
-    }
-def is_new_episode(number, existing_numbers):
-    return number not in existing_numbers
+
+def types_of(node):
+    value = node.get("@type", [])
+    return {value} if isinstance(value, str) else set(value) if isinstance(value, list) else set()
+
+
+def subscription_dates(episode_node):
+    dates = set()
+    for node in walk_json(episode_node.get("potentialAction", {})):
+        if node.get("category") != "subscription":
+            continue
+        date_text = node.get("availabilityStarts")
+        if isinstance(date_text, str):
+            try:
+                dates.add(datetime.fromisoformat(date_text.replace("Z", "+00:00")).date().isoformat())
+            except ValueError:
+                pass
+    return dates
+
+
+def verify_episode(html, expected_number, expected_season, expected_name):
+    parser = PageParser("https://plus.rtl.de/")
+    parser.feed(html)
+    matches = set()
+    for document in parser.json_ld:
+        for node in walk_json(document):
+            if "TVEpisode" not in types_of(node):
+                continue
+            season = node.get("partOfSeason")
+            if not isinstance(season, dict):
+                continue
+            try:
+                season_number = int(season.get("seasonNumber"))
+            except (ValueError, TypeError):
+                continue
+            if season_number != expected_season:
+                continue
+            try:
+                episode_number = int(node.get("episodeNumber"))
+            except (ValueError, TypeError):
+                continue
+            if episode_number != expected_number:
+                continue
+            series = node.get("partOfSeries")
+            if not isinstance(series, dict) or series.get("name", "").strip().casefold() != expected_name.strip().casefold():
+                continue
+            matches.update(subscription_dates(node))
+    if len(matches) != 1:
+        raise ValueError("Staffel, Serie, Folgennummer oder Abo-Datum nicht eindeutig bestaetigt")
+    return next(iter(matches))
+
+
 def main():
-    print("REALITY RADAR - RTL+ FOLGENVERGLEICH")
-    print("-----------------------------------")
-
-    with open("feed.json", encoding="utf-8") as file:
+    with SOURCES_PATH.open(encoding="utf-8") as file:
+        sources = json.load(file)["shows"]
+    with FEED_PATH.open(encoding="utf-8") as file:
         feed = json.load(file)
-
     shows = feed if isinstance(feed, list) else feed["shows"]
+    total_new = 0
 
-    show = next(
-        (
-            item
-            for item in shows
-            if item.get("name") == SOURCE["name"]
-            and item.get("season") == SOURCE["season"]
-        ),
-        None,
-    )
-
-    if show is None:
-        raise ValueError("Love Island VIP Staffel 3 fehlt")
-
-    existing = {
-        episode["number"]
-        for episode in show["episodes"]
-    }
-
-    print("UEBERSICHTSSEITE")
-    html = load_page(URL)
-    print("HTML-Laenge:", len(html))
-
-    finder = LinkFinder()
-    finder.feed(html)
-
-    discovered = {}
-
-    for link in finder.links:
-        parsed = urlparse(link)
-
-        if parsed.hostname != "plus.rtl.de":
+    for source in sources:
+        if not source.get("enabled") or source.get("source") != "rtl_plus":
             continue
-
-        if "/love-island-vip-p_3030/video/" not in parsed.path:
+        name = source["name"]
+        season_label = source["season"]
+        season_match = re.fullmatch(r"Staffel\s+(\d+)", season_label)
+        if not season_match:
+            print(f"UEBERSPRUNGEN: Ungueltige Staffelbezeichnung fuer {name}")
             continue
-
-        match = re.search(
-            r"/folge-(\d+)-2026-c_",
-            parsed.path,
-            flags=re.IGNORECASE,
-        )
-
-        if match:
-            number = int(match.group(1))
-            discovered[number] = link
-
-    print("Vorhandene Folgen:", len(existing))
-    print("Gefundene RTL+-Folgenlinks:", len(discovered))
-
-    for number in sorted(discovered):
-        print(
-            "RTL+ gefunden: Folge",
-            number,
-            discovered[number],
-        )
-    print("-----------------------------------")
-    print("AUTOMATISCHE ABO-DATUMSPRUEFUNG")
-
-    for number, link in sorted(discovered.items()):
-        try:
-            page_html = load_page(link)
-
-            abo_dates = re.findall(
-                r'"category"\s*:\s*"subscription"'
-                r'.{0,500}?"availabilityStarts"\s*:\s*"([^"]+)"',
-                page_html,
-            )
-
-            if len(set(abo_dates)) == 1:
-                date = datetime.fromisoformat(abo_dates[0]).date()
-                print(f"Folge {number}: ABO {date.isoformat()}")
-            else:
-                print(f"Folge {number}: Kein eindeutiger ABO-Start")
-
-        except Exception as error:
-            print(f"Folge {number}: Fehler bei der Pruefung: {error}")
-
-        candidates = sorted(
-        number
-        for number in discovered
-        if is_new_episode(number, existing)
-    )
-
-    print("Moegliche neue Folgen:", len(candidates))
-    
-    new_episodes = []
-
-    for number in candidates:
-        print("PRUEFEN: Folge", number)
-
-        try:
-            candidate_html = load_page(discovered[number])
-            season_match = re.search(
-                r'"partOfSeason"\s*:\s*\{[^{}]*"seasonNumber"\s*:\s*(\d+)',
-                candidate_html,
-            )
-
-            if not season_match or int(season_match.group(1)) != 3:
-                print("UEBERSPRUNGEN: Staffel 3 nicht bestaetigt")
+        season_number = int(season_match.group(1))
+        url = source["url"]
+        parsed_url = urlparse(url)
+        if parsed_url.scheme != "https" or parsed_url.hostname != "plus.rtl.de":
+            print(f"UEBERSPRUNGEN: Ungueltige RTL+-URL fuer {name}")
+            continue
+        show = next((item for item in shows if item.get("name") == name and item.get("season") == season_label), None)
+        if show is None:
+            print(f"UEBERSPRUNGEN: {name} {season_label} fehlt in feed.json")
+            continue
+        episodes = show["episodes"]
+        existing_numbers = {episode["number"] for episode in episodes}
+        existing_ids = {episode["id"] for episode in episodes}
+        if len(existing_numbers) != len(episodes) or len(existing_ids) != len(episodes):
+            raise ValueError(f"Doppelte vorhandene Folgen bei {name} {season_label}")
+        print(f"PRUEFE: {name} {season_label}")
+        overview = PageParser(url)
+        overview.feed(load_page(url))
+        discovered = {}
+        base_path = parsed_url.path.rstrip("/") + "/video/"
+        for link in overview.links:
+            parsed = urlparse(link)
+            if parsed.scheme != "https" or parsed.hostname != "plus.rtl.de" or not parsed.path.startswith(base_path):
                 continue
-
-            abo_dates = re.findall(
-                r'"category"\s*:\s*"subscription"'
-                r'.{0,500}?"availabilityStarts"\s*:\s*"([^"]+)"',
-                candidate_html,
-            )
-
-            if len(set(abo_dates)) != 1:
-                print("UEBERSPRUNGEN: Kein eindeutiger Abo-Start")
+            match = re.search(r"/folge-(\d+)-\d{4}-c_", parsed.path, flags=re.IGNORECASE)
+            if match:
+                number = int(match.group(1))
+                discovered.setdefault(number, set()).add(link)
+        candidates = sorted(number for number in discovered if number not in existing_numbers)
+        print(f"Neue Folgennummern: {len(candidates)}")
+        new_episodes = []
+        for number in candidates:
+            links = discovered[number]
+            if len(links) != 1:
+                print(f"UEBERSPRUNGEN: Folge {number} hat mehrere Links")
                 continue
+            try:
+                date = verify_episode(load_page(next(iter(links))), number, season_number, name)
+                # The ID prefix is a legacy format. Existing IDs are never changed.
+                prefix = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
+                episode_id = f"{prefix}-s{season_number}-e{number}"
+                if episode_id in existing_ids or any(ep["id"] == episode_id for ep in new_episodes):
+                    raise ValueError("ID bereits vorhanden")
+                new_episodes.append({"id": episode_id, "number": number, "availableOn": date})
+                print(f"NEU: Folge {number}, {date}")
+            except Exception as error:
+                print(f"UEBERSPRUNGEN: Folge {number}: {error}")
+        if new_episodes:
+            episodes.extend(new_episodes)
+            total_new += len(new_episodes)
 
-            date = datetime.fromisoformat(abo_dates[0]).date()
-            episode = create_episode(number, date.isoformat())
-            new_episodes.append(episode)
-            
-            print(
-                "NEUER FOLGENEINTRAG:",
-                json.dumps(episode, ensure_ascii=False),
-            )
-
-        except Exception as error:
-            print("UEBERSPRUNGEN:", error)
-
-    if not candidates:
-        print("Keine unbekannten Folgennummern gefunden.")
-        
-    if new_episodes:
-        existing_ids = {
-            episode["id"]
-            for episode in show["episodes"]
-        }
-
-        for episode in new_episodes:
-            if (
-                episode["id"] in existing_ids
-                or episode["number"] in existing
-            ):
-                raise ValueError(
-                    "Doppelte Folge erkannt: " + episode["id"]
-                )
-
-        print(
-            "SPEICHERN VORBEREITET:",
-            len(new_episodes),
-            "neue Folgen"
-        )
-    if new_episodes:
-        show["episodes"].extend(new_episodes)
-
-        with open("feed.json", "w", encoding="utf-8") as file:
+    if total_new:
+        # All changes are applied only after all sources were processed successfully.
+        with FEED_PATH.open("w", encoding="utf-8") as file:
             json.dump(feed, file, ensure_ascii=False, indent=2)
             file.write("\n")
-
-        print("FEED AKTUALISIERT:", len(new_episodes), "neue Folgen")   
-        
-    print("-----------------------------------")
-    print("FOLGENSEITE - TEST")
-
-    episode_url = (
-        "https://plus.rtl.de/love-island-vip-p_3030/"
-        "video/folge-14-2026-c_2174504"
-    )
-
-    episode_html = load_page(episode_url)
-    season_test = re.search(
-        r'"partOfSeason"\s*:\s*\{[^{}]*"seasonNumber"\s*:\s*(\d+)',
-        episode_html,
-    )
-
-    if season_test:
-        print("STAFFEL ERKANNT:", season_test.group(1))
+        print(f"FEED AKTUALISIERT: {total_new} neue Folgen")
     else:
-        print("STAFFEL NICHT ERKANNT")
-
-    print("HTML-Laenge:", len(episode_html))
-    print("2026-10-28:", "2026-10-28" in episode_html)
-    position = episode_html.find("2026-10-28")
-    if position >= 0:
-        print("DATUM-KONTEXT:")
-        print(episode_html[max(0, position - 150):position + 150])
-    print("releaseDate:", "releaseDate" in episode_html)
-    print("datePublished:", "datePublished" in episode_html)
-    dates = re.findall(
-        r'"availabilityStarts"\s*:\s*"([^"]+)"',
-        episode_html
-    )
-    print("RTL+ Verfügbarkeitsdaten:", sorted(set(dates)))
-    abo_dates = re.findall(
-        r'"category"\s*:\s*"subscription"'
-        r'.{0,500}?"availabilityStarts"\s*:\s*"([^"]+)"',
-        episode_html
-    )
-
-    if abo_dates:
-        abo_date = datetime.fromisoformat(abo_dates[0]).date()
-        print("ABO-START ERKANNT:", abo_date.isoformat())
-    else:
-        print("KEIN ABO-START ERKANNT")
-    print(
-        "ABO-ZUGANG VORHANDEN:",
-        '"category":"subscription"' in episode_html
-    )
-    position = episode_html.find("2026-10-28T22:15:00")
-    if position >= 0:
-        print("VERFUEGBARKEIT-KONTEXT:")
-        print(episode_html[max(0, position - 250):position + 250])
-    print("-----------------------------------")
-    print("Hinweis: Staffel und Datum nicht bestaetigt.")
-    print("Die feed.json wurde nicht veraendert.")
+        print("Keine neuen geprueften Folgen. feed.json unveraendert.")
 
 
 if __name__ == "__main__":
