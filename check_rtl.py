@@ -6,7 +6,22 @@ import urllib.request
 from html.parser import HTMLParser
 from urllib.parse import urljoin, urlparse
 
-URL = "https://plus.rtl.de/love-island-vip-p_3030"
+with open("show-sources.json", encoding="utf-8") as file:
+    sources = json.load(file)["shows"]
+
+rtl_sources = [
+    item for item in sources
+    if item.get("source") == "rtl_plus"
+    and item.get("enabled", False)
+]
+
+if len(rtl_sources) != 1:
+    raise ValueError(
+        "Aktuell muss genau eine RTL+-Sendung aktiviert sein."
+    )
+
+SOURCE = rtl_sources[0]
+URL = SOURCE["url"]
 
 
 class LinkFinder(HTMLParser):
@@ -58,8 +73,8 @@ def main():
     show = next(
         (
             item for item in shows
-            if item.get("name") == "Love Island VIP"
-            and item.get("season") == "Staffel 3"
+        if item.get("name") == SOURCE["name"]
+        and item.get("season") == SOURCE["season"]),
         ),
         None,
     )
