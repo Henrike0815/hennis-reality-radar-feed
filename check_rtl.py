@@ -140,6 +140,41 @@ def diagnose_inactive_sources(sources):
                   f"Folgenmuster={len(episode_links)}, JSON-LD-Typen={','.join(ld_types[:8]) or 'keine'}")
             for link in show_videos[:2]:
                 print(f"BEISPIEL {name}: {urlparse(link).path[:180]}")
+            # Compare URL numbers against metadata before any source is enabled.
+            checked = 0
+            matching = 0
+            differing = 0
+            no_date = 0
+            for episode_url in sorted(set(episode_links))[:5]:
+                try:
+                    detail_page = PageParser(episode_url)
+                    detail_page.feed(load_page(episode_url))
+                    url_match = re.search(r"/folge-(\\d+)-c_", urlparse(episode_url).path, re.I)
+                    url_number = int(url_match.group(1))
+                    nodes = [node for doc in detail_page.json_ld
+                             for node in walk_json(doc)
+                             if "TVEpisode" in types_of(node)]
+                    checked += 1
+                    if len(nodes) != 1:
+                        print(f"ABGLEICH {name}: URL-Folge={url_number}, TVEpisode-Anzahl={len(nodes)}")
+                        continue
+                    node = nodes[0]
+                    try:
+                        meta_number = int(node.get("episodeNumber"))
+                    except (ValueError, TypeError):
+                        meta_number = None
+                    dates = subscription_dates(node)
+                    if meta_number == url_number:
+                        matching += 1
+                    else:
+                        differing += 1
+                        print(f"ABWEICHUNG {name}: URL-Folge={url_number}, Metadaten-Folge={meta_number}")
+                    if len(dates) != 1:
+                        no_date += 1
+                except Exception as error:
+                    print(f"ABGLEICH {name}: Seitenpruefung fehlgeschlagen: {error}")
+            print(f"ABGLEICH {name}: geprueft={checked}, Nummer-gleich={matching}, "
+                  f"Nummer-abweichend={differing}, Abo-Datum-nicht-eindeutig={no_date}")
             # Inspect at most one unique episode per inactive show. No feed writes.
             unique_episodes = sorted(set(episode_links))
             if unique_episodes:
