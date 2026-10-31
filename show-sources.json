@@ -22,7 +22,10 @@
       "season": "Staffel 11",
       "source": "rtl_plus",
       "enabled": false,
-      "url": "https://plus.rtl.de/das-sommerhaus-der-stars-kampf-der-promipaare-p_6405"
+      "url": "https://plus.rtl.de/das-sommerhaus-der-stars-kampf-der-promipaare-p_6405",
+      "rtl_names": [
+        "Das Sommerhaus der Stars - Kampf der Promipaare"
+      ]
     },
     {
       "name": "Are You The One? – Realitystars in Love",
@@ -30,7 +33,10 @@
       "season": "Staffel 6",
       "source": "rtl_plus",
       "enabled": false,
-      "url": "https://plus.rtl.de/are-you-the-one-reality-stars-in-love-p_6838"
+      "url": "https://plus.rtl.de/are-you-the-one-reality-stars-in-love-p_6838",
+      "rtl_names": [
+        "Are You The One - Realitystars in Love"
+      ]
     },
     {
       "name": "#CoupleChallenge – Halloween Edition",
@@ -38,7 +44,11 @@
       "season": "Halloween Edition",
       "source": "rtl_plus",
       "enabled": false,
-      "url": "https://plus.rtl.de/couplechallenge-das-starkste-team-gewinnt-p_11271"
+      "url": "https://plus.rtl.de/couplechallenge-das-starkste-team-gewinnt-p_11271",
+      "rtl_names": [
+        "#CoupleChallenge - Das stärkste Team gewinnt"
+      ],
+      "rtl_season_number": 6
     },
     {
       "name": "Manhunt Saigon",
