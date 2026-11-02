@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-30",
+  "updatedAt": "2026-11-02",
   "shows": [
     {
       "name": "Temptation Island VIP",
@@ -1054,6 +1054,93 @@
           "id": "the50-s3-e15",
           "number": 15,
           "availableOn": "2026-04-06"
+        }
+      ]
+    },
+    {
+      "name": "7 vs. Wild",
+      "platform": "Amazon Prime Video",
+      "season": "Staffel 6",
+      "episodes": [
+        {
+          "id": "7vswild-s6-e1",
+          "number": 1,
+          "availableOn": "2026-10-23"
+        },
+        {
+          "id": "7vswild-s6-e2",
+          "number": 2,
+          "availableOn": "2026-10-27"
+        },
+        {
+          "id": "7vswild-s6-e3",
+          "number": 3,
+          "availableOn": "2026-10-30"
+        },
+        {
+          "id": "7vswild-s6-e4",
+          "number": 4,
+          "availableOn": "2026-11-03"
+        },
+        {
+          "id": "7vswild-s6-e5",
+          "number": 5,
+          "availableOn": "2026-11-06"
+        },
+        {
+          "id": "7vswild-s6-e6",
+          "number": 6,
+          "availableOn": "2026-11-10"
+        },
+        {
+          "id": "7vswild-s6-e7",
+          "number": 7,
+          "availableOn": "2026-11-13"
+        },
+        {
+          "id": "7vswild-s6-e8",
+          "number": 8,
+          "availableOn": "2026-11-17"
+        },
+        {
+          "id": "7vswild-s6-e9",
+          "number": 9,
+          "availableOn": "2026-11-20"
+        },
+        {
+          "id": "7vswild-s6-e10",
+          "number": 10,
+          "availableOn": "2026-11-24"
+        },
+        {
+          "id": "7vswild-s6-e11",
+          "number": 11,
+          "availableOn": "2026-11-27"
+        },
+        {
+          "id": "7vswild-s6-e12",
+          "number": 12,
+          "availableOn": "2026-12-01"
+        },
+        {
+          "id": "7vswild-s6-e13",
+          "number": 13,
+          "availableOn": "2026-12-04"
+        },
+        {
+          "id": "7vswild-s6-e14",
+          "number": 14,
+          "availableOn": "2026-12-08"
+        },
+        {
+          "id": "7vswild-s6-e15",
+          "number": 15,
+          "availableOn": "2026-12-11"
+        },
+        {
+          "id": "7vswild-s6-e16",
+          "number": 16,
+          "availableOn": "2026-12-15"
         }
       ]
     }
