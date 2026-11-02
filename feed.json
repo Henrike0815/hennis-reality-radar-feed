@@ -1255,23 +1255,13 @@
     },
     {
       "name": "Die Bachelorette Schweiz",
-      "platform": "oneplus",
+      "platform": "RTL+ Premium",
       "season": "Staffel 11",
       "episodes": [
         {
           "id": "bachelorette-schweiz-s11-e1",
           "number": 1,
-          "availableOn": "2026-10-25"
-        },
-        {
-          "id": "bachelorette-schweiz-s11-e2",
-          "number": 2,
-          "availableOn": "2026-11-01"
-        },
-        {
-          "id": "bachelorette-schweiz-s11-e3",
-          "number": 3,
-          "availableOn": "2026-11-08"
+          "availableOn": "2026-11-05"
         }
       ]
     }
