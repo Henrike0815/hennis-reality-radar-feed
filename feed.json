@@ -1190,6 +1190,68 @@
           "availableOn": "2026-11-12"
         }
       ]
+    },
+    {
+      "name": "Prominent verwandt",
+      "platform": "RTL+ Premium",
+      "season": "Staffel 1",
+      "episodes": [
+        {
+          "id": "prominent-verwandt-s1-e1",
+          "number": 1,
+          "availableOn": "2026-11-10"
+        },
+        {
+          "id": "prominent-verwandt-s1-e2",
+          "number": 2,
+          "availableOn": "2026-11-17"
+        },
+        {
+          "id": "prominent-verwandt-s1-e3",
+          "number": 3,
+          "availableOn": "2026-11-24"
+        },
+        {
+          "id": "prominent-verwandt-s1-e4",
+          "number": 4,
+          "availableOn": "2026-12-01"
+        },
+        {
+          "id": "prominent-verwandt-s1-e5",
+          "number": 5,
+          "availableOn": "2026-12-08"
+        },
+        {
+          "id": "prominent-verwandt-s1-e6",
+          "number": 6,
+          "availableOn": "2026-12-15"
+        },
+        {
+          "id": "prominent-verwandt-s1-e7",
+          "number": 7,
+          "availableOn": "2026-12-22"
+        },
+        {
+          "id": "prominent-verwandt-s1-e8",
+          "number": 8,
+          "availableOn": "2026-12-29"
+        },
+        {
+          "id": "prominent-verwandt-s1-e9",
+          "number": 9,
+          "availableOn": "2027-01-05"
+        },
+        {
+          "id": "prominent-verwandt-s1-e10",
+          "number": 10,
+          "availableOn": "2027-01-12"
+        },
+        {
+          "id": "prominent-verwandt-s1-e11",
+          "number": 11,
+          "availableOn": "2027-01-19"
+        }
+      ]
     }
   ]
 }
