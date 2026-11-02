@@ -1143,6 +1143,53 @@
           "availableOn": "2026-12-15"
         }
       ]
+    },
+    {
+      "name": "Der Promihof",
+      "platform": "RTL+ Premium",
+      "season": "Staffel 2",
+      "episodes": [
+        {
+          "id": "promihof-s2-e1",
+          "number": 1,
+          "availableOn": "2026-10-22"
+        },
+        {
+          "id": "promihof-s2-e2",
+          "number": 2,
+          "availableOn": "2026-10-22"
+        },
+        {
+          "id": "promihof-s2-e3",
+          "number": 3,
+          "availableOn": "2026-10-29"
+        },
+        {
+          "id": "promihof-s2-e4",
+          "number": 4,
+          "availableOn": "2026-10-29"
+        },
+        {
+          "id": "promihof-s2-e5",
+          "number": 5,
+          "availableOn": "2026-11-05"
+        },
+        {
+          "id": "promihof-s2-e6",
+          "number": 6,
+          "availableOn": "2026-11-05"
+        },
+        {
+          "id": "promihof-s2-e7",
+          "number": 7,
+          "availableOn": "2026-11-12"
+        },
+        {
+          "id": "promihof-s2-e8",
+          "number": 8,
+          "availableOn": "2026-11-12"
+        }
+      ]
     }
   ]
 }
