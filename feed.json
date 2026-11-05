@@ -435,6 +435,11 @@
           "id": "manhunt-s4-e3",
           "number": 3,
           "availableOn": "2026-11-01"
+        },
+        {
+          "id": "manhunt-s4-e4",
+          "number": 4,
+          "availableOn": "2026-11-04"
         }
       ]
     },
