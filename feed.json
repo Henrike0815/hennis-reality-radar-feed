@@ -450,6 +450,26 @@
           "id": "manhunt-s4-e6",
           "number": 6,
           "availableOn": "2026-11-11"
+        },
+        {
+          "id": "manhunt-s4-e7",
+          "number": 7,
+          "availableOn": "2026-11-15"
+        },
+        {
+          "id": "manhunt-s4-e8",
+          "number": 8,
+          "availableOn": "2026-11-18"
+        },
+        {
+          "id": "manhunt-s4-e9",
+          "number": 9,
+          "availableOn": "2026-11-22"
+        },
+        {
+          "id": "manhunt-s4-e10",
+          "number": 10,
+          "availableOn": "2026-11-25"
         }
       ]
     },
